@@ -1,0 +1,28 @@
+﻿@using FormBuilderMVC.Utilities
+@model FormBuilderMVC.Models.Inputs
+
+@{
+    ViewData["Title"] = "Edit Input";
+}
+
+
+<h4>Edit Input</h4>
+<hr />
+<div class="row">
+    <div class="container body-content border p-3 mt-4 mb-4">
+        <form asp-action="UpdateInput" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @await Html.PartialAsync("_InputCreateAndEdit")
+
+
+            <div class="form-group mb-4">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

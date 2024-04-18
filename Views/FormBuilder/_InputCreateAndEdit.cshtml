@@ -1,0 +1,83 @@
+﻿@using FormBuilderMVC.Utilities
+@model FormBuilderMVC.Models.Inputs
+
+<div class="form-group mb-4">
+    <label asp-for="Id" class="control-label"></label>
+    <input asp-for="Id" class="form-control" />
+    <span asp-validation-for="Id" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="SurveyId" class="control-label"></label>
+    <input asp-for="SurveyId" class="form-control" />
+    <span asp-validation-for="SurveyId" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="InputType" class="control-label"></label>
+    <select asp-for="InputType" class="form-control">
+        @foreach (var option in HtmlHelpers.DropdownList)
+        {
+            <option value="@option.Key">@option.Value</option>
+        }
+    </select>
+    <span asp-validation-for="InputType" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="InternalName" class="control-label"></label>
+    <input asp-for="InternalName" class="form-control" />
+    <span asp-validation-for="InternalName" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="Label" class="control-label"></label>
+    <input asp-for="Label" class="form-control" />
+    <span asp-validation-for="Label" class="text-danger"></span>
+</div>
+<div class="form-group form-check mb-4">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="ShouldHideLabel" /> @Html.DisplayNameFor(model => model.ShouldHideLabel)
+    </label>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="DefaultValue" class="control-label"></label>
+    <input asp-for="DefaultValue" class="form-control" />
+    <span asp-validation-for="DefaultValue" class="text-danger"></span>
+</div>
+<div class="form-group form-check mb-4">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="IsAutofocus" /> @Html.DisplayNameFor(model => model.IsAutofocus)
+    </label>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="Placeholder" class="control-label"></label>
+    <input asp-for="Placeholder" class="form-control" />
+    <span asp-validation-for="Placeholder" class="text-danger"></span>
+</div>
+<div class="form-group form-check mb-4">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
+    </label>
+</div>
+<div class="form-group mb-4" id="optionDataFields">
+    <label asp-for="OptionData" class="control-label"></label>
+    <div>
+        <input asp-for="OptionData" class="form-control" />
+        <span asp-validation-for="OptionData" class="text-danger"></span>
+    </div>
+    <a id="addOption">Add</a>
+    <a id="removeOption">Remove</a>
+</div>
+
+<script>
+    document.getElementById("addOption").addEventListener("click", function () {
+        var optionDataFields = document.getElementById("optionDataFields");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.name = "OptionData";
+        input.className = "form-control";
+        var span = document.createElement("span");
+        span.className = "text-danger";
+        var div = document.createElement("div");
+        div.appendChild(input);
+        div.appendChild(span);
+        optionDataFields.appendChild(div);
+    });
+</script>

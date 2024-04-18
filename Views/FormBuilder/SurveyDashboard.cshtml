@@ -1,0 +1,53 @@
+﻿@model IEnumerable<FormBuilderMVC.Models.Surveys>
+
+@{
+    ViewData["Title"] = "Survey Dashboard";
+}
+
+<h4>Survey List</h4>
+<hr />
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <a asp-action="CreateSurvey" class="btn btn-warning">Create New Survey</a>
+        </div>
+    </div>
+
+    <table border="1" class="table table-bordered table-responsive">
+        <thead>
+            <tr class="btn-primary">
+                <th><label>@Html.DisplayNameFor(model => model.Id)</label></th>
+                <th><label>@Html.DisplayNameFor(model => model.Title)</label></th>
+                <th><label>@Html.DisplayNameFor(model => model.OpenDate)</label></th>
+                <th><label>@Html.DisplayNameFor(model => model.EndDate)</label></th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditSurvey", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "DeleteSurvey", new { id = item.Id }) |
+                        @Html.ActionLink("Preview", "PreviewSurvey", new { id = item.Id }) |
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

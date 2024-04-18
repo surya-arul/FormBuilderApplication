@@ -1,0 +1,49 @@
+﻿@model FormBuilderMVC.Models.Surveys
+
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <a asp-action="CreateInput" asp-controller="FormBuilder" class="btn btn-warning">Create input</a>
+        </div>
+    </div>
+    @if (Model.Inputs is not null)
+    {
+        <table border="1" class="table table-bordered table-responsive">
+            <thead>
+                <tr class="btn-primary">
+                    <th><label>Id</label></th>
+                    <th><label>Input type</label></th>
+                    <th><label>Internal name</label></th>
+                    <th><label>Label</label></th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Inputs)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InputType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InternalName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditInput", new { inputId = item.Id, surveyId = item.SurveyId }) |
+                            @Html.ActionLink("Remove", "RemoveInput", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+

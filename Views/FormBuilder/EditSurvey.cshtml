@@ -1,0 +1,31 @@
+﻿@model FormBuilderMVC.Models.Surveys
+
+@{
+    ViewData["Title"] = "Edit Survey";
+}
+
+<h4>Survey Details</h4>
+<hr />
+<div class="container body-content border p-3 mt-4 mb-4">
+    <form asp-action="UpdateSurvey" asp-route-id="@Model.Id" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @await Html.PartialAsync("_SurveyCreateAndEdit")
+
+        <div class="form-group mb-4">
+            <input type="submit" value="Update survey" class="btn btn-primary" />
+        </div>
+
+    </form>
+</div>
+
+@await Html.PartialAsync("_InputTable")
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@*
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+} *@

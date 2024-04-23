@@ -1,6 +1,6 @@
 ﻿namespace FormBuilderMVC.Utilities
 {
-    public enum HtmlInputType
+    public enum HtmlType
     {
         Text,
         Number,

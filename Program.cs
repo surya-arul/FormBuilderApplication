@@ -1,3 +1,9 @@
+using FormBuilderMVC.DbContexts;
+using FormBuilderMVC.DTOs.Config;
+using FormBuilderMVC.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 namespace FormBuilderMVC
 {
     public class Program
@@ -8,6 +14,24 @@ namespace FormBuilderMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            #region Binding config settings
+
+            builder.Services.AddOptions<ConnectionStrings>()
+                .Bind(builder.Configuration.GetSection(nameof(ConnectionStrings)))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            #endregion
+
+            builder.Services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+            {
+                var dbSettings = serviceProvider.GetRequiredService<IOptionsMonitor<ConnectionStrings>>().CurrentValue;
+                options.UseSqlServer(dbSettings.DbConnection);
+            });
+
+            builder.Services.AddTransient<ISurveyRepository, SurveyRepository>();
+            builder.Services.AddTransient<IInputRepository, InputRepository>();
 
             var app = builder.Build();
 

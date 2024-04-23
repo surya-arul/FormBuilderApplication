@@ -1,49 +1,52 @@
-﻿@model FormBuilderMVC.Models.Surveys
+﻿@using FormBuilderMVC.DTOs.Base
+@model List<InputsDto>
 
-
-<div class="container body-content border p-3 mt-4 mb-4">
-
-    <div class="row mb-3">
-        <div class="col-md-2">
-            <a asp-action="CreateInput" asp-controller="FormBuilder" class="btn btn-warning">Create input</a>
-        </div>
-    </div>
-    @if (Model.Inputs is not null)
-    {
-        <table border="1" class="table table-bordered table-responsive">
-            <thead>
-                <tr class="btn-primary">
-                    <th><label>Id</label></th>
-                    <th><label>Input type</label></th>
-                    <th><label>Internal name</label></th>
-                    <th><label>Label</label></th>
-                    <th>Actions</th>
+<table border="1" class="table table-bordered table-responsive">
+    <thead>
+        <tr class="btn-primary">
+            <th>Id</th>
+            <th>Survey Id</th>
+            <th>Input type</th>
+            <th>Internal name</th>
+            <th>Label</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model is not null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.SurveyId
+                    </td>
+                    <td>
+                        @item.InputType
+                    </td>
+                    <td>
+                        @item.InternalName
+                    </td>
+                    <td>
+                        @item.Label
+                    </td>
+                    <td>
+                        <a asp-action="EditInput" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="DeleteInput" asp-route-id="@item.Id" asp-route-surveyId="@item.SurveyId">Delete</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Inputs)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.InputType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.InternalName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Label)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "EditInput", new { inputId = item.Id, surveyId = item.SurveyId }) |
-                            @Html.ActionLink("Remove", "RemoveInput", new { id = item.Id })
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-</div>
-
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">
+                    No data to list
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

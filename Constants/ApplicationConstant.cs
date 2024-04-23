@@ -1,6 +1,6 @@
 ﻿namespace FormBuilderMVC.Constants
 {
-    public class TitleConstant
+    public class ApplicationConstant
     {
         public const string ApplicationTitle = "Dynamic Form Builder";
     }

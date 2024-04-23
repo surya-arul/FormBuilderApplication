@@ -1,4 +1,6 @@
-﻿using FormBuilderMVC.Models;
+﻿using FormBuilderMVC.DTOs.Base;
+using FormBuilderMVC.DTOs.Request;
+using FormBuilderMVC.Repositories;
 using FormBuilderMVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,33 +8,25 @@ namespace FormBuilderMVC.Controllers
 {
     public class FormBuilderController : Controller
     {
-        private static List<Surveys> _surveys =
-        [
-            new Surveys()
-            {
-                Id = 1, Title="Employee form", OpenDate = DateTime.Now.Date, EndDate = DateTime.Now.Date , Inputs = new List<Inputs>
-                {
-                    new Inputs()
-                    {
-                        Id = 1, SurveyId= 1, InputType = "Text", Label ="First Name", InternalName = "Name TextBox"
-                    },
-                    new Inputs()
-                    {
-                        Id = 2, SurveyId= 1, InputType = "Number", Label ="Phone number", InternalName = "My Number"
-                    }
-                }
-            },
-            new Surveys()
-            { Id = 2, Title="Delete form", OpenDate = DateTime.Now.Date, EndDate = DateTime.Now.Date },
-            new Surveys()
-            { Id = 3, Title="Feedback form", OpenDate = DateTime.Now.Date, EndDate = DateTime.Now.Date }
-        ];
+        private readonly ISurveyRepository _surveyRepository;
+        private readonly IInputRepository _inputRepository;
 
-        public IActionResult SurveyDashboard()
+        public FormBuilderController(ISurveyRepository surveyRepository, IInputRepository inputRepository)
+        {
+            _surveyRepository = surveyRepository;
+            _inputRepository = inputRepository;
+        }
+
+        #region SurveyCRUD
+
+        #region Get Survey
+
+        public async Task<IActionResult> Surveys()
         {
             try
             {
-                return View(_surveys);
+                var response = await _surveyRepository.GetAllSurveys();
+                return View(response);
             }
             catch (Exception ex)
             {
@@ -40,14 +34,28 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
+        public async Task<IActionResult> SurveyDashboard(GetSurveyRequest request)
+        {
+            try
+            {
+                var response = await _surveyRepository.GetSurveyById(request);
+                return View(response);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", ex);
+            }
+        }
+
+        #endregion
+
+        #region Create Survey
+
         public IActionResult CreateSurvey()
         {
             try
             {
-                return View(new Surveys()
-                {
-                    Inputs = []
-                });
+                return View(new SurveysDto());
             }
             catch (Exception ex)
             {
@@ -57,22 +65,17 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SubmitSurvey(Surveys survey)
+        public async Task<IActionResult> AddSurvey(SurveysDto createSurveyRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(nameof(CreateSurvey), survey);
+                    return View(nameof(CreateSurvey), createSurveyRequest);
                 }
 
-                int maxId = _surveys.Max(s => s.Id);
-
-                survey.Id = maxId + 1;
-
-                _surveys.Add(survey);
-
-                return RedirectToAction(nameof(SurveyDashboard));
+                var response = await _surveyRepository.CreateSurvey(new CreateSurveyRequest { Survey = createSurveyRequest });
+                return RedirectToAction(nameof(Surveys));
             }
             catch (Exception ex)
             {
@@ -80,18 +83,24 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
-        public IActionResult EditSurvey(int id)
+        #endregion
+
+        #region Edit Survey
+
+        public async Task<IActionResult> EditSurvey(GetSurveyRequest request)
         {
             try
             {
-                var survey = _surveys.FirstOrDefault(x => x.Id == id);
+                var survey = await _surveyRepository.GetSurveyById(request);
 
                 if (survey == null)
                 {
                     return NotFound();
                 }
 
-                return View(survey);
+                var surveyDto = survey.Survey;
+
+                return View(surveyDto);
             }
             catch (Exception ex)
             {
@@ -101,54 +110,36 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateSurvey(int? id, Surveys updatedSurvey)
+        public async Task<IActionResult> UpdateSurvey(SurveysDto updatedSurveyRequest)
         {
             try
             {
-                if (id != updatedSurvey.Id)
-                {
-                    return BadRequest();
-                }
-
                 if (!ModelState.IsValid)
                 {
-                    return View(nameof(EditSurvey), updatedSurvey);
+                    return View(nameof(EditSurvey), updatedSurveyRequest);
                 }
 
-                var existingSurvey = _surveys.FirstOrDefault(s => s.Id == id);
+                var response = await _surveyRepository.UpdateSurvey(new UpdateSurveyRequest() { Survey = updatedSurveyRequest });
 
-                if (existingSurvey == null)
-                {
-                    return NotFound();
-                }
-
-                existingSurvey.Title = updatedSurvey.Title;
-                existingSurvey.OpenDate = updatedSurvey.OpenDate;
-                existingSurvey.EndDate = updatedSurvey.EndDate;
-
-                return RedirectToAction(nameof(SurveyDashboard));
+                return RedirectToAction(nameof(Surveys));
             }
             catch (Exception ex)
             {
-                return View("Error", ex);
+                return View("Error", ex.Message);
             }
         }
 
-        public IActionResult DeleteSurvey(int id)
+        #endregion
+
+        #region Delete Survey
+
+        public async Task<IActionResult> DeleteSurvey(DeleteSurveyRequest deleteSurveyRequest)
         {
             try
             {
-                var surveyToRemove = _surveys.FirstOrDefault(s => s.Id == id);
-                if (surveyToRemove != null)
-                {
-                    _surveys.Remove(surveyToRemove);
-                }
-                else
-                {
-                    return RedirectToAction("Error");
-                }
+                var response = await _surveyRepository.DeleteSurvey(deleteSurveyRequest);
 
-                return RedirectToAction(nameof(SurveyDashboard));
+                return RedirectToAction(nameof(Surveys));
             }
             catch (Exception ex)
             {
@@ -156,12 +147,19 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
+        #endregion
 
-        public IActionResult CreateInput()
+        #endregion
+
+        #region InputCRUD
+
+        #region Create Input
+
+        public IActionResult CreateInput(int surveyId)
         {
             try
             {
-                return View();
+                return View(new InputsDto() { SurveyId = surveyId });
             }
             catch (Exception ex)
             {
@@ -171,44 +169,28 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SubmitInput(Inputs model)
+        public async Task<IActionResult> AddInput(InputsDto createInputRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(nameof(CreateInput), model);
+                    return View(nameof(CreateInput), createInputRequest);
                 }
 
-                if (!Enum.TryParse(model.InputType, true, out HtmlInputType inputType))
+                /*if (!Enum.TryParse(model.InputType, true, out HtmlInputType inputType))
                 {
                     return RedirectToAction("Error");
-                }
+                }*/
 
-                var employeeFormSurvey = _surveys.FirstOrDefault(s => s.Id == model.SurveyId);
-                if (employeeFormSurvey != null)
-                {
-                    int maxId = employeeFormSurvey.Inputs?.Max(i => i.Id) ?? 0;
+                var response = await _inputRepository.CreateInput(new CreateInputRequest { Input = createInputRequest });
+                return RedirectToAction(nameof(SurveyDashboard), new { id = createInputRequest.SurveyId });
 
-                    model.Id = maxId + 1;
-
-                    if (employeeFormSurvey.Inputs == null)
-                    {
-                        employeeFormSurvey.Inputs = new List<Inputs>();
-                    }
-
-                    employeeFormSurvey.Inputs.Add(model);
-                }
-                else
-                {
-                    return RedirectToAction("Error");
-                }
-
-                string inputTag = HtmlHelpers.GenerateInputTag(inputType, model);
+                /*string inputTag = HtmlHelpers.GenerateInputTag(inputType, model);
 
                 ViewBag.InputTag = inputTag;
 
-                return View(nameof(Designer));
+                return View(nameof(Designer));*/
             }
             catch (Exception ex)
             {
@@ -216,20 +198,23 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
-        public IActionResult EditInput(int inputId, int surveyId)
+        #endregion
+
+        #region Edit Input
+        public async Task<IActionResult> EditInput(GetInputRequest request)
         {
             try
             {
-                var existingSurvey = _surveys.FirstOrDefault(s => s.Id == surveyId);
-
-                var existingInput = existingSurvey?.Inputs?.FirstOrDefault(x => x.Id == inputId);
+                var existingInput = await _inputRepository.GetInputById(request);
 
                 if (existingInput == null)
                 {
                     return NotFound();
                 }
 
-                return View(existingInput);
+                var inputDto = existingInput.Input;
+
+                return View(inputDto);
             }
             catch (Exception ex)
             {
@@ -239,34 +224,64 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateInput(int? id, Inputs updatedInput)
+        public async Task<IActionResult> UpdateInput(InputsDto updatedInputRequest)
         {
             try
             {
-                if (id != updatedInput.Id)
+                if (!ModelState.IsValid)
+                {
+                    return View(nameof(EditInput), updatedInputRequest);
+                }
+
+                var response = await _inputRepository.UpdateInput(new UpdateInputRequest() { Input = updatedInputRequest });
+
+                return RedirectToAction(nameof(SurveyDashboard), new { id = updatedInputRequest.SurveyId });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", ex);
+            }
+        }
+
+        #endregion
+
+        #region Delete Input
+
+        public async Task<IActionResult> DeleteInput(DeleteInputRequest deleteInputRequest, int surveyId)
+        {
+            try
+            {
+                var response = await _inputRepository.DeleteInput(deleteInputRequest);
+
+                return RedirectToAction(nameof(SurveyDashboard), new { id = surveyId });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", ex);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region FormDesign
+        public async Task<IActionResult> PreviewSurvey(GetInputsBasedOnSurveyIdRequest request)
+        {
+            try
+            {
+                var response = await _inputRepository.GetInputsBySurveyId(request);
+
+                if (response is null || response.Inputs.Count is 0)
                 {
                     return BadRequest();
                 }
 
-                if (!ModelState.IsValid)
-                {
-                    return View(nameof(EditInput), updatedInput);
-                }
+                string allHtml = HtmlHelper.GenerateForm(response.Inputs);
 
-                var existingSurvey = _surveys.FirstOrDefault(s => s.Id == updatedInput.SurveyId);
+                ViewBag.InputTag = allHtml;
 
-                var existingInput = existingSurvey?.Inputs?.FirstOrDefault(x => x.Id == id);
-
-                if (existingInput == null)
-                {
-                    return NotFound();
-                }
-
-                existingInput.InputType = updatedInput.InputType;
-                existingInput.InternalName = updatedInput.InternalName;
-                existingInput.Label = updatedInput.Label;
-
-                return RedirectToAction(nameof(SurveyDashboard));
+                return View(nameof(SurveyOutput));
             }
             catch (Exception ex)
             {
@@ -274,29 +289,7 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
-        public IActionResult DeleteInput(int id)
-        {
-            try
-            {
-                var surveyToRemove = _surveys.FirstOrDefault(s => s.Id == id);
-                if (surveyToRemove != null)
-                {
-                    _surveys.Remove(surveyToRemove);
-                }
-                else
-                {
-                    return RedirectToAction("Error");
-                }
-
-                return RedirectToAction(nameof(SurveyDashboard));
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Error", ex);
-            }
-        }
-
-        public IActionResult Designer()
+        public IActionResult SurveyOutput()
         {
             try
             {
@@ -306,28 +299,7 @@ namespace FormBuilderMVC.Controllers
             {
                 return RedirectToAction("Error", ex);
             }
-        }
-        public IActionResult PreviewSurvey(int id)
-        {
-            try
-            {
-                var survey = _surveys.FirstOrDefault(x => x.Id == id);
-
-                if (survey is null && survey?.Inputs?.Count > 0)
-                {
-                    return BadRequest();
-                }
-
-                string allHtml = HtmlHelpers.GenerateForm(survey?.Inputs);
-
-                ViewBag.InputTag = allHtml;
-
-                return View(nameof(Designer));
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Error", ex);
-            }
-        }
+        } 
+        #endregion
     }
 }

@@ -1,26 +1,19 @@
-﻿@model FormBuilderMVC.Models.Surveys
+﻿@model FormBuilderMVC.DTOs.Base.SurveysDto
 
 @{
     ViewData["Title"] = "Create Survey";
 }
 
-<h4>Survey Details</h4>
+<h4>Create Survey</h4>
 <hr />
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="SubmitSurvey" method="post">
+    <form asp-action="AddSurvey" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        @await Html.PartialAsync("_SurveyCreateAndEdit")
+        <partial name="_SurveyCreateAndEdit" />
 
         <div class="form-group mb-4">
             <input type="submit" value="Create survey" class="btn btn-primary" />
         </div>
-
     </form>
-</div>
-
-@await Html.PartialAsync("_InputTable")
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>

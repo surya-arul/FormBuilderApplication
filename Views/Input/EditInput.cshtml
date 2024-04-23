@@ -1,4 +1,6 @@
-﻿@model FormBuilderMVC.DTOs.Base.InputsDto
+﻿@using FormBuilderMVC.Controllers
+@using FormBuilderMVC.Utilities
+@model FormBuilderMVC.DTOs.Base.InputsDto
 
 @{
     ViewData["Title"] = "Edit Input";
@@ -7,7 +9,7 @@
 <h4>Edit Input</h4>
 <hr />
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="UpdateInput" asp-route-surveyId="@Model.SurveyId" asp-route-id="@Model.Id" method="post">
+    <form asp-action="@nameof(InputController.UpdateInput)" asp-controller="@StringHelper.ExtractControllerName(typeof(InputController))" asp-route-surveyId="@Model.SurveyId" asp-route-id="@Model.Id" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <partial name="_InputCreateAndEdit" />

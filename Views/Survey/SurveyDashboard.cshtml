@@ -1,0 +1,25 @@
+﻿@using FormBuilderMVC.Controllers
+@using FormBuilderMVC.DTOs.Response
+@using FormBuilderMVC.Utilities
+@model GetSurveyResponse
+
+@{
+    ViewData["Title"] = "Survey Dashboard";
+}
+
+<h4>Survey Title - @Model.Survey.Title</h4>
+<h5>Open Date - @Model.Survey.OpenDate</h5>
+<h5>End Date - @Model.Survey.EndDate</h5>
+<hr />
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <a asp-action="@nameof(InputController.CreateInput)" asp-controller="@StringHelper.ExtractControllerName(typeof(InputController))" class="btn btn-warning" asp-route-surveyId="@Model.Survey.Id">Create input</a>
+        </div>
+    </div>
+
+    <partial name="~/Views/Input/_InputTable.cshtml" model="Model.Inputs" />
+
+</div>

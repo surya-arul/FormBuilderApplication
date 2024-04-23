@@ -1,4 +1,6 @@
-﻿@using FormBuilderMVC.DTOs.Response
+﻿@using FormBuilderMVC.Controllers
+@using FormBuilderMVC.DTOs.Response
+@using FormBuilderMVC.Utilities
 @model GetAllSurveysResponse
 
 @{
@@ -12,16 +14,13 @@
 
     <div class="row mb-3">
         <div class="col-md-2">
-            <a asp-action="CreateSurvey" class="btn btn-warning">Create survey</a>
+            <a asp-action="@nameof(SurveyController.CreateSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" class="btn btn-warning">Create survey</a>
         </div>
     </div>
 
     <table border="1" class="table table-bordered table-responsive">
         <thead>
             <tr class="btn-primary">
-                <th>
-                    Id
-                </th>
                 <th>
                     Title
                 </th>
@@ -41,9 +40,6 @@
                 {
                     <tr>
                         <td>
-                            @item.Id
-                        </td>
-                        <td>
                             @item.Title
                         </td>
                         <td>
@@ -53,10 +49,10 @@
                             @item.EndDate
                         </td>
                         <td>
-                            <a asp-action="SurveyDashboard" asp-route-id="@item.Id">View</a> |
-                            <a asp-action="EditSurvey" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="DeleteSurvey" asp-route-id="@item.Id">Delete</a> |
-                            <a asp-action="PreviewSurvey" asp-route-surveyId="@item.Id">Preview</a>
+                            <a asp-action="@nameof(SurveyController.SurveyDashboard)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" asp-route-id="@item.Id">View</a> |
+                            <a asp-action="@nameof(SurveyController.EditSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="@nameof(SurveyController.DeleteSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" asp-route-id="@item.Id">Delete</a> |
+                            <a asp-action="@nameof(FormBuilderController.PreviewSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-surveyId="@item.Id">Preview</a>
                         </td>
                     </tr>
                 }

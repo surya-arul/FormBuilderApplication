@@ -1,4 +1,6 @@
-﻿@model FormBuilderMVC.DTOs.Base.InputsDto
+﻿@using FormBuilderMVC.Controllers
+@using FormBuilderMVC.Utilities
+@model FormBuilderMVC.DTOs.Base.InputsDto
 
 @{
     ViewData["Title"] = "Create Input";
@@ -8,7 +10,7 @@
 <hr />
 
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="AddInput" method="post" asp-route-surveyId="@Model.SurveyId">
+    <form asp-action="@nameof(InputController.AddInput)" asp-controller="@StringHelper.ExtractControllerName(typeof(InputController))" method="post" asp-route-surveyId="@Model.SurveyId">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <partial name="_InputCreateAndEdit" />

@@ -1,6 +1,5 @@
 using FormBuilderMVC.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace FormBuilderMVC.Controllers
 {
@@ -18,10 +17,9 @@ namespace FormBuilderMVC.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(ErrorViewModel error)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(error);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿@model FormBuilderMVC.DTOs.Base.SurveysDto
+﻿@using FormBuilderMVC.Controllers
+@using FormBuilderMVC.Utilities
+@model FormBuilderMVC.DTOs.Base.SurveysDto
 
 @{
     ViewData["Title"] = "Create Survey";
@@ -7,7 +9,7 @@
 <h4>Create Survey</h4>
 <hr />
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="AddSurvey" method="post">
+    <form asp-action="@nameof(SurveyController.AddSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <partial name="_SurveyCreateAndEdit" />

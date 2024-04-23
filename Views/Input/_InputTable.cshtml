@@ -6,6 +6,7 @@
 <table border="1" class="table table-bordered table-responsive">
     <thead>
         <tr class="btn-primary">
+            <th>Order no</th>
             <th>Input type</th>
             <th>Internal name</th>
             <th>Label</th>
@@ -18,6 +19,9 @@
             foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @item.OrderNo
+                    </td>
                     <td>
                         @item.InputType
                     </td>

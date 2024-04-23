@@ -20,11 +20,14 @@ public partial class ApplicationDbContext : DbContext
     {
         modelBuilder.Entity<TblInput>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tblInput__3214EC07DCDD2505");
+            entity.HasKey(e => e.Id).HasName("PK__tblInput__3214EC0700202B5B");
 
             entity.ToTable("tblInputs");
 
-            entity.Property(e => e.DefaultValue)
+            entity.Property(e => e.DivClassName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.InputClassName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.InputType)
@@ -36,20 +39,26 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Label)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.LabelClassName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.OptionData).IsUnicode(false);
             entity.Property(e => e.Placeholder)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Value)
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Survey).WithMany(p => p.TblInputs)
                 .HasForeignKey(d => d.SurveyId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_tblInputs_SurveyId");
+                .HasConstraintName("FK__tblInputs__Surve__3D5E1FD2");
         });
 
         modelBuilder.Entity<TblSurvey>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tblSurve__3214EC0785D4AA9F");
+            entity.HasKey(e => e.Id).HasName("PK__tblSurve__3214EC07E7B2FABD");
 
             entity.ToTable("tblSurveys");
 

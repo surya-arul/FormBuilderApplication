@@ -15,7 +15,5 @@ namespace FormBuilderMVC.DTOs.Base
 
         [Display(Name = "End date")]
         public DateOnly EndDate { get; set; } = DateOnly.FromDateTime(DateTime.Today);
-
-        //public List<InputsDto> Inputs { get; set; } = new();
     }
 }

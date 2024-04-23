@@ -3,6 +3,11 @@
 @model InputsDto
 
 <div class="form-group mb-4">
+    <label asp-for="OrderNo" class="control-label"></label>
+    <input asp-for="OrderNo" class="form-control" />
+    <span asp-validation-for="OrderNo" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
     <label asp-for="InputType" class="control-label"></label>
     <select asp-for="InputType" class="form-control">
         @foreach (var option in FormBuilderMVC.Utilities.HtmlHelper.HtmlTypeDropdownList)
@@ -18,6 +23,16 @@
     <span asp-validation-for="InternalName" class="text-danger"></span>
 </div>
 <div class="form-group mb-4">
+    <label asp-for="DivClassName" class="control-label"></label>
+    <input asp-for="DivClassName" class="form-control" />
+    <span asp-validation-for="DivClassName" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="InputClassName" class="control-label"></label>
+    <input asp-for="InputClassName" class="form-control" />
+    <span asp-validation-for="InputClassName" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
     <label asp-for="Label" class="control-label"></label>
     <input asp-for="Label" class="form-control" />
     <span asp-validation-for="Label" class="text-danger"></span>
@@ -29,9 +44,14 @@
     </label>
 </div>
 <div class="form-group mb-4">
-    <label asp-for="DefaultValue" class="control-label"></label>
-    <input asp-for="DefaultValue" class="form-control" />
-    <span asp-validation-for="DefaultValue" class="text-danger"></span>
+    <label asp-for="LabelClassName" class="control-label"></label>
+    <input asp-for="LabelClassName" class="form-control" />
+    <span asp-validation-for="LabelClassName" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
+    <label asp-for="Value" class="control-label"></label>
+    <input asp-for="Value" class="form-control" />
+    <span asp-validation-for="Value" class="text-danger"></span>
 </div>
 <div class="form-group form-check mb-4">
     <label class="form-check-label">

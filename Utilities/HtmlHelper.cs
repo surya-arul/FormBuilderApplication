@@ -32,7 +32,7 @@ namespace FormBuilderMVC.Utilities
             {
                 if (!Enum.TryParse(item.InputType, true, out HtmlType inputType))
                 {
-                    throw new Exception();
+                    throw new Exception($"{item.InputType} - {item.InternalName} Not a valid Html type");
                 }
 
                 string inputTag = GenerateHtmlTag(inputType, item);

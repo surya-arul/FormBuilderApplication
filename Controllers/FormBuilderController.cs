@@ -29,7 +29,9 @@ namespace FormBuilderMVC.Controllers
                     return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to generate survey." });
                 }
 
-                string allHtml = HtmlHelper.GenerateForm(response.Inputs);
+                var surveyResponse = await _surveyRepository.GetSurveyById(new GetSurveyRequest { Id = request.SurveyId });
+
+                string allHtml = HtmlHelper.GenerateForm(response.Inputs, surveyResponse.Survey);
 
                 ViewBag.InputTag = allHtml;
 

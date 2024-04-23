@@ -20,7 +20,7 @@ public partial class ApplicationDbContext : DbContext
     {
         modelBuilder.Entity<TblInput>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tblInput__3214EC0700202B5B");
+            entity.HasKey(e => e.Id).HasName("PK__tblInput__3214EC07465A90AC");
 
             entity.ToTable("tblInputs");
 
@@ -53,15 +53,21 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Survey).WithMany(p => p.TblInputs)
                 .HasForeignKey(d => d.SurveyId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__tblInputs__Surve__3D5E1FD2");
+                .HasConstraintName("FK__tblInputs__Surve__4222D4EF");
         });
 
         modelBuilder.Entity<TblSurvey>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tblSurve__3214EC07E7B2FABD");
+            entity.HasKey(e => e.Id).HasName("PK__tblSurve__3214EC0706CEA9CA");
 
             entity.ToTable("tblSurveys");
 
+            entity.Property(e => e.FormAction)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.FormMethod)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.Title)
                 .HasMaxLength(100)
                 .IsUnicode(false);

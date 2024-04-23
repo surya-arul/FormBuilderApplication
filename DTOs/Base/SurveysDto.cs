@@ -15,5 +15,11 @@ namespace FormBuilderMVC.DTOs.Base
 
         [Display(Name = "End date")]
         public DateOnly EndDate { get; set; } = DateOnly.FromDateTime(DateTime.Today);
+
+        [Display(Name = "Form method")]
+        public string? FormMethod { get; set; }
+
+        [Display(Name = "Form action")]
+        public string? FormAction { get; set; }
     }
 }

@@ -13,5 +13,9 @@ public partial class TblSurvey
 
     public DateOnly EndDate { get; set; }
 
+    public string? FormMethod { get; set; }
+
+    public string? FormAction { get; set; }
+
     public virtual ICollection<TblInput> TblInputs { get; set; } = new List<TblInput>();
 }

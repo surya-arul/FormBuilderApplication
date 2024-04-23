@@ -4,6 +4,7 @@ using FormBuilderMVC.DTOs.Request;
 using FormBuilderMVC.DTOs.Response;
 using FormBuilderMVC.Models;
 using FormBuilderMVC.Utilities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace FormBuilderMVC.Repositories
@@ -59,6 +60,8 @@ namespace FormBuilderMVC.Repositories
                         Title = survey.Title,
                         OpenDate = survey.OpenDate,
                         EndDate = survey.EndDate,
+                        FormMethod = survey.FormMethod,
+                        FormAction = survey.FormAction,
                     },
                     Inputs = survey.TblInputs.Select(input => new InputsDto
                     {
@@ -68,14 +71,16 @@ namespace FormBuilderMVC.Repositories
                         InputType = input.InputType,
                         InternalName = input.InternalName,
                         DivClassName = input.DivClassName,
+                        InputClassName = input.InputClassName,
                         Label = input.Label,
                         ShouldHideLabel = input.ShouldHideLabel,
+                        LabelClassName = input.LabelClassName,
                         Value = input.Value,
                         IsAutofocus = input.IsAutofocus,
                         Placeholder = input.Placeholder,
                         IsRequired = input.IsRequired,
                         OptionData = !string.IsNullOrEmpty(input.OptionData) ? StringHelper.StringToList(input.OptionData, null) : new List<string>()
-                    }).ToList()
+                    }).OrderBy(x => x.OrderNo).ToList()
                 }).FirstOrDefaultAsync();
 
             var response = new GetSurveyResponse
@@ -103,7 +108,9 @@ namespace FormBuilderMVC.Repositories
             {
                 Title = request.Survey.Title,
                 OpenDate = request.Survey.OpenDate,
-                EndDate = request.Survey.EndDate
+                EndDate = request.Survey.EndDate,
+                FormMethod = request.Survey.FormMethod,
+                FormAction = request.Survey.FormAction,
             };
 
             _context.TblSurveys.Add(survey);
@@ -131,6 +138,8 @@ namespace FormBuilderMVC.Repositories
             existingSurvey.Title = request.Survey.Title;
             existingSurvey.OpenDate = request.Survey.OpenDate;
             existingSurvey.EndDate = request.Survey.EndDate;
+            existingSurvey.FormMethod = request.Survey.FormMethod;
+            existingSurvey.FormAction = request.Survey.FormAction;
 
             await _context.SaveChangesAsync();
 

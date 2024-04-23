@@ -11,7 +11,9 @@ CREATE TABLE tblSurveys (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Title VARCHAR(100) NOT NULL,
     OpenDate Date NOT NULL,
-    EndDate Date NOT NULL
+    EndDate Date NOT NULL,
+    FormMethod VARCHAR(100) NULL,
+    FormAction VARCHAR(100) NULL,
 );
 
 -- Creating table (tblInputs) 

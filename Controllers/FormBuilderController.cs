@@ -26,7 +26,7 @@ namespace FormBuilderMVC.Controllers
 
                 if (response is null || response.Inputs.Count is 0)
                 {
-                    return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to generate survey." });
+                    return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to generate survey because current date is not lies between open/end date." });
                 }
 
                 var surveyResponse = await _surveyRepository.GetSurveyById(new GetSurveyRequest { Id = request.SurveyId });

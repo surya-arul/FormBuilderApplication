@@ -13,6 +13,11 @@ namespace FormBuilderMVC.Utilities
             return stringSplitList.Count is not 0 ? stringSplitList : listInput ?? [];
         }
 
+        public static string ConvertToLowercaseAndRemoveSpaces(string? input)
+        {
+            return input?.ToLower().Replace(" ", "") ?? string.Empty;
+        }
+
         public static string ExtractControllerName(this Type controllerType)
         {
             const string controllerSuffix = "Controller";

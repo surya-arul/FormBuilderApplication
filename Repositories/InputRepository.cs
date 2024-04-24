@@ -64,7 +64,7 @@ namespace FormBuilderMVC.Repositories
 
             var inputs = await _context.TblInputs
                 .Include(input => input.Survey)
-                .Where(input => input.Survey.OpenDate <= currentDate && input.Survey.EndDate >= currentDate)
+                .Where(input => input.Survey.EndDate >= currentDate && input.Survey.OpenDate <= currentDate)
                 .Where(input => input.SurveyId == request.SurveyId)
                 .Select(input => new InputsDto
                 {

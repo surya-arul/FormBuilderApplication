@@ -8,7 +8,7 @@ GO
 
 -- Creating table (tblSurveys) 
 CREATE TABLE tblSurveys (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id INT IDENTITY(1,1) CONSTRAINT PK_tblSurveys_Id PRIMARY KEY,
     Title VARCHAR(100) NOT NULL,
     OpenDate Date NOT NULL,
     EndDate Date NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE tblSurveys (
 
 -- Creating table (tblInputs) 
 CREATE TABLE tblInputs (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id INT IDENTITY(1,1) CONSTRAINT PK_tblInputs_Id PRIMARY KEY,
 	SurveyId INT NOT NULL,
     OrderNo INT NOT NULL,
     InputType VARCHAR(100) NOT NULL,
@@ -33,5 +33,5 @@ CREATE TABLE tblInputs (
 	Placeholder VARCHAR(100) NULL,
 	IsRequired BIT NOT NULL,
 	OptionData VARCHAR(MAX) NULL,
-    FOREIGN KEY (SurveyId) REFERENCES tblSurveys(Id) ON DELETE CASCADE -- Foreign key with cascade
+    CONSTRAINT FK_tblInputs_SurveyId FOREIGN KEY (SurveyId) REFERENCES tblSurveys(Id) ON DELETE CASCADE -- Foreign key with delete cascade
 );

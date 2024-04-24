@@ -62,7 +62,8 @@ namespace FormBuilderMVC.Utilities
             {
                 case HtmlType.Text:
                     htmlTag += inputs.ShouldHideLabel ? string.Empty : GenerateLabel(inputs);
-                    htmlTag += $"<input type=\"text\" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
+                    htmlTag += $"<input type=\"text\"";
+                    htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
                     htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += inputs.IsAutofocus ? " autofocus" : string.Empty;
@@ -72,7 +73,8 @@ namespace FormBuilderMVC.Utilities
                     break;
                 case HtmlType.Number:
                     htmlTag += inputs.ShouldHideLabel ? string.Empty : GenerateLabel(inputs);
-                    htmlTag += $"<input type=\"number\" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
+                    htmlTag += $"<input type=\"number\"";
+                    htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
                     htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += inputs.IsAutofocus ? " autofocus" : string.Empty;
@@ -82,7 +84,8 @@ namespace FormBuilderMVC.Utilities
                     break;
                 case HtmlType.Date:
                     htmlTag += inputs.ShouldHideLabel ? string.Empty : GenerateLabel(inputs);
-                    htmlTag += $"<input type=\"date\" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
+                    htmlTag += $"<input type=\"date\"";
+                    htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
                     htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += inputs.IsAutofocus ? " autofocus" : string.Empty;
@@ -92,7 +95,8 @@ namespace FormBuilderMVC.Utilities
                     break;
                 case HtmlType.Email:
                     htmlTag += inputs.ShouldHideLabel ? string.Empty : GenerateLabel(inputs);
-                    htmlTag += $"<input type=\"email\" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
+                    htmlTag += $"<input type=\"email\"";
+                    htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
                     htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += inputs.IsAutofocus ? " autofocus" : string.Empty;
@@ -102,7 +106,8 @@ namespace FormBuilderMVC.Utilities
                     break;
                 case HtmlType.File:
                     htmlTag += inputs.ShouldHideLabel ? string.Empty : GenerateLabel(inputs);
-                    htmlTag += $"<input type=\"file\" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
+                    htmlTag += $"<input type=\"file\"";
+                    htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
                     htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += " />\n";
@@ -114,7 +119,8 @@ namespace FormBuilderMVC.Utilities
                         foreach (var item in inputs.OptionData)
                         {
                             string requiredAttribute = inputs.IsRequired ? "required" : string.Empty;
-                            htmlTag += $"<input type=\"checkbox\" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(item)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(item)}\" value=\"{item}\" {requiredAttribute}";
+                            htmlTag += $"<input type=\"checkbox\"";
+                            htmlTag += string.IsNullOrEmpty(item) ? string.Empty : $" id =\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(item)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(item)}\" value=\"{item}\" {requiredAttribute}";
                             htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                             htmlTag += $" />\n";
                             htmlTag += $"<label for=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(item)}\">{item}</label>\n";
@@ -128,7 +134,9 @@ namespace FormBuilderMVC.Utilities
                         foreach (var item in inputs.OptionData)
                         {
                             string requiredAttribute = inputs.IsRequired ? "required" : string.Empty;
-                            htmlTag += $"<input type=\"radio\" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(item)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" value=\"{item}\" {requiredAttribute}";
+                            htmlTag += $"<input type=\"radio\"";
+                            htmlTag += string.IsNullOrEmpty(item) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(item)}\" value=\"{item}\"";
+                            htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" {requiredAttribute}";
                             htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                             htmlTag += $" />\n";
 
@@ -138,7 +146,8 @@ namespace FormBuilderMVC.Utilities
                     break;
                 case HtmlType.Textarea:
                     htmlTag += inputs.ShouldHideLabel ? string.Empty : GenerateLabel(inputs);
-                    htmlTag += $"<textarea id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
+                    htmlTag += $"<textarea";
+                    htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
                     htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += inputs.IsAutofocus ? " autofocus" : string.Empty;
@@ -148,7 +157,8 @@ namespace FormBuilderMVC.Utilities
                     break;
                 case HtmlType.Select:
                     htmlTag += inputs.ShouldHideLabel ? string.Empty : GenerateLabel(inputs);
-                    htmlTag += $"<select id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
+                    htmlTag += $"<select";
+                    htmlTag += string.IsNullOrEmpty(inputs.Label) ? string.Empty : $" id=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\" name=\"{StringHelper.ConvertToLowercaseAndRemoveSpaces(inputs.Label)}\"";
                     htmlTag += string.IsNullOrEmpty(inputs.InputClassName) ? string.Empty : $" class=\"{inputs.InputClassName}\"";
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += inputs.IsAutofocus ? " autofocus" : string.Empty;

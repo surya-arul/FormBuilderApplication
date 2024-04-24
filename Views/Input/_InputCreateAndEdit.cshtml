@@ -83,8 +83,8 @@
             </div>
         }
     }
-    <a id="addOption">Add</a>
-    <a id="removeOption">Remove</a>
+    <button id="addOption" type="button" class="btn btn-link">Add</button>
+    <button id="removeOption" type="button" class="btn btn-link">Remove</button>
 </div>
 
 
@@ -108,7 +108,10 @@
         var optionDataFields = document.getElementById("optionDataFields");
         var childrenCount = optionDataFields.children.length;
         if (childrenCount > 1) { // Check if there are more than one child (min 1 field + 1 Remove button)
-            optionDataFields.removeChild(optionDataFields.lastChild); // Remove last field
+            var lastChild = optionDataFields.lastChild;
+            var span = lastChild.querySelector("span"); // Get the corresponding span element
+            optionDataFields.removeChild(lastChild); // Remove the last field
+            optionDataFields.removeChild(span); // Remove the corresponding span element
         }
     });
 </script>

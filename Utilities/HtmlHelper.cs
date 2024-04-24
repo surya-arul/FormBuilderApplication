@@ -152,7 +152,7 @@ namespace FormBuilderMVC.Utilities
                     htmlTag += inputs.IsRequired ? " required" : string.Empty;
                     htmlTag += inputs.IsAutofocus ? " autofocus" : string.Empty;
                     htmlTag += string.IsNullOrEmpty(inputs.Placeholder) ? string.Empty : $" placeholder=\"{inputs.Placeholder}\"";
-                    htmlTag += $">\n{(string.IsNullOrEmpty(inputs.Value) ? string.Empty : inputs.Value)}\n";
+                    htmlTag += $">{(string.IsNullOrEmpty(inputs.Value) ? string.Empty : inputs.Value)}";
                     htmlTag += "</textarea>\n";
                     break;
                 case HtmlType.Select:

@@ -155,6 +155,7 @@ namespace FormBuilderMVC.Utilities
                     htmlTag += $">\n";
                     if (inputs?.OptionData?.Count > 0)
                     {
+                        htmlTag += $"<option value=\"\">--Select--</option>\n";
                         foreach (var item in inputs.OptionData)
                         {
                             htmlTag += $"<option value=\"{item}\">{item}</option>\n";
@@ -195,7 +196,5 @@ namespace FormBuilderMVC.Utilities
 
             return labelTag;
         }
-
-        
     }
 }

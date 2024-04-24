@@ -68,6 +68,7 @@
     <label class="form-check-label">
         <input class="form-check-input" asp-for="IsRequired" /> 
         <label asp-for="IsRequired" class="control-label"></label>
+        <span asp-validation-for="IsRequired" class="text-danger"></span>
     </label>
 </div>
 <div class="form-group mb-4" id="optionDataFields">
@@ -81,13 +82,6 @@
                 <span asp-validation-for="OptionData" class="text-danger"></span>
             </div>
         }
-    }
-    else
-    {
-        @* <div class="form-group mb-4">
-            <input asp-for="OptionData" class="form-control" value=""/>
-            <span asp-validation-for="OptionData" class="text-danger"></span>
-        </div> *@
     }
     <a id="addOption">Add</a>
     <a id="removeOption">Remove</a>

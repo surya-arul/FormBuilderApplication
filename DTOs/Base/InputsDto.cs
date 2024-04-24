@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FormBuilderMVC.CustomValidations;
+using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilderMVC.DTOs.Base
 {
@@ -8,15 +9,19 @@ namespace FormBuilderMVC.DTOs.Base
         public int Id { get; set; }
 
         [Display(Name = "Survey id")]
+        [Range(1, int.MaxValue, ErrorMessage = "Should not be zero.")]
         public int SurveyId { get; set; }
 
         [Display(Name = "Order no")]
+        [Range(1, int.MaxValue, ErrorMessage = "Should not be zero.")]
         public int OrderNo { get; set; }
 
         [Display(Name = "Input type")]
+        [Required]
         public string InputType { get; set; } = null!;
 
         [Display(Name = "Internal name")]
+        [Required]
         public string InternalName { get; set; } = null!;
 
         [Display(Name = "Div class name")]
@@ -26,6 +31,7 @@ namespace FormBuilderMVC.DTOs.Base
         public string? InputClassName { get; set; }
 
         [Display(Name = "Label")]
+        [LabelValidation]
         public string? Label { get; set; }
 
         [Display(Name = "Hide label")]
@@ -35,18 +41,22 @@ namespace FormBuilderMVC.DTOs.Base
         public string? LabelClassName { get; set; }
 
         [Display(Name = "Value")]
+        [ValueValidation]
         public string? Value { get; set; }
 
         [Display(Name = "Autofocus")]
         public bool IsAutofocus { get; set; }
 
         [Display(Name = "Placeholder")]
-        public string? Placeholder { get; set; } // Only applies to text and textarea
+        [PlaceholderValidation]
+        public string? Placeholder { get; set; }
 
         [Display(Name = "Required")]
-        public bool IsRequired { get; set; } // Only applies to text and textarea
+        [RequiredValidation]
+        public bool IsRequired { get; set; }
 
         [Display(Name = "Option data")]
-        public List<string>? OptionData { get; set; } // Only applies to select,checkbox and radio fields
+        [OptionDataValidation]
+        public List<string>? OptionData { get; set; }
     }
 }

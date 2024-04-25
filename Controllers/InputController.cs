@@ -41,6 +41,15 @@ namespace FormBuilderMVC.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    // Check if OptionData has validation errors
+                    if (ModelState.TryGetValue(nameof(InputsDto.OptionData), out var optionDataModelState))
+                    {
+                        // Clear the OptionData list if it has validation errors
+                        if (optionDataModelState.Errors.Any())
+                        {
+                            createInputRequest.OptionData = [];
+                        }
+                    }
                     return View(nameof(CreateInput), createInputRequest);
                 }
 
@@ -85,6 +94,15 @@ namespace FormBuilderMVC.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    // Check if OptionData has validation errors
+                    if (ModelState.TryGetValue(nameof(InputsDto.OptionData), out var optionDataModelState))
+                    {
+                        // Clear the OptionData list if it has validation errors
+                        if (optionDataModelState.Errors.Any())
+                        {
+                            updatedInputRequest.OptionData = [];
+                        }
+                    }
                     return View(nameof(EditInput), updatedInputRequest);
                 }
 

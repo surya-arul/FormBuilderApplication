@@ -79,10 +79,10 @@
         {
             <div class="form-group mb-4">
                 <input asp-for="OptionData" class="form-control" value="@option" />
-                <span asp-validation-for="OptionData" class="text-danger"></span>
             </div>
         }
     }
+    <span asp-validation-for="OptionData" class="text-danger"></span>
     <button id="addOption" type="button" class="btn btn-link">Add</button>
     <button id="removeOption" type="button" class="btn btn-link">Remove</button>
 </div>

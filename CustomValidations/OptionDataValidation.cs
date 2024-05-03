@@ -8,11 +8,11 @@ namespace FormBuilderMVC.CustomValidations
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var inputsDto = (InputsDto)validationContext.ObjectInstance;
+            var controlsDto = (ControlsDto)validationContext.ObjectInstance;
 
             var validationResults = new List<ValidationResult>();
 
-            if (Enum.TryParse(inputsDto.InputType, true, out HtmlType inputType))
+            if (Enum.TryParse(controlsDto.InputType, true, out HtmlType inputType))
             {
                 var allowedInputTypes = new List<HtmlType> {
                     HtmlType.CheckBox,
@@ -23,7 +23,7 @@ namespace FormBuilderMVC.CustomValidations
                 // Perform validation for input types not included in the allowed list
                 if (!allowedInputTypes.Contains(inputType))
                 {
-                    if (inputsDto.OptionData is not null && inputsDto?.OptionData?.Count > 0)
+                    if (controlsDto.OptionData is not null && controlsDto?.OptionData?.Count > 0)
                     {
                         var allowedTypesMessage = string.Join(", ", allowedInputTypes);
                         var errorMessage = $"Option Data should be empty for input types other than {allowedTypesMessage}.";
@@ -33,7 +33,7 @@ namespace FormBuilderMVC.CustomValidations
             }
             else
             {
-                validationResults.Add(new ValidationResult($"Invalid InputType: {inputsDto.InputType}"));
+                validationResults.Add(new ValidationResult($"Invalid InputType: {controlsDto.InputType}"));
             }
 
             return validationResults.Count is not 0 ? new ValidationResult(string.Join(", ", validationResults)) : ValidationResult.Success;

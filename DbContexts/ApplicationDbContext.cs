@@ -12,12 +12,47 @@ public partial class ApplicationDbContext : DbContext
     {
     }
 
+    public virtual DbSet<TblControl> TblControls { get; set; }
+
     public virtual DbSet<TblInput> TblInputs { get; set; }
 
     public virtual DbSet<TblSurvey> TblSurveys { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TblControl>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_tblControls_Id");
+
+            entity.ToTable("tblControls");
+
+            entity.Property(e => e.DivClassName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.InputClassName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.InputType)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.InternalName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Label)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.LabelClassName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.OptionData).IsUnicode(false);
+            entity.Property(e => e.Placeholder)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Value)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<TblInput>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_tblInputs_Id");
@@ -52,7 +87,6 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.Survey).WithMany(p => p.TblInputs)
                 .HasForeignKey(d => d.SurveyId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_tblInputs_SurveyId");
         });
 

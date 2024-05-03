@@ -1,0 +1,54 @@
+﻿@using FormBuilderMVC.Controllers
+@using FormBuilderMVC.DTOs.Response
+@using FormBuilderMVC.Utilities
+@model GetAllControlsResponse
+
+@{
+    ViewData["Title"] = "Controls";
+}
+
+<h4>Controls List</h4>
+<hr />
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <a asp-action="@nameof(ControlsController.CreateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" class="btn btn-warning">Create control</a>
+        </div>
+    </div>
+
+    <table border="1" class="table table-bordered table-responsive">
+        <thead>
+            <tr class="btn-primary">
+                <th>
+                    Internal name
+                </th>
+                <th>
+                    Input type
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Controls is not null)
+            {
+                @foreach (var item in Model.Controls)
+                {
+                    <tr>
+                        <td>
+                            @item.InternalName
+                        </td>
+                        <td>
+                            @item.InputType
+                        </td>
+                        <td>
+                            <a asp-action="@nameof(ControlsController.EditControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="@nameof(ControlsController.DeleteControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" asp-route-id="@item.Id">Delete</a> |
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

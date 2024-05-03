@@ -3,26 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilderMVC.DTOs.Base
 {
-    public class InputsDto
+    public class ControlsDto
     {
         [Display(Name = "Id")]
         public int Id { get; set; }
 
-        [Display(Name = "Survey id")]
-        [Range(1, int.MaxValue, ErrorMessage = "Should not be zero.")]
-        public int SurveyId { get; set; }
-
-        [Display(Name = "Order no")]
-        [Range(1, int.MaxValue, ErrorMessage = "Should not be zero.")]
-        public int OrderNo { get; set; }
+        [Display(Name = "Internal name")]
+        [Required]
+        public string InternalName { get; set; } = null!;
 
         [Display(Name = "Input type")]
         [Required]
         public string InputType { get; set; } = null!;
-
-        [Display(Name = "Internal name")]
-        [Required]
-        public string InternalName { get; set; } = null!;
 
         [Display(Name = "Div class name")]
         public string? DivClassName { get; set; }
@@ -31,7 +23,7 @@ namespace FormBuilderMVC.DTOs.Base
         public string? InputClassName { get; set; }
 
         [Display(Name = "Label")]
-        //[LabelValidation]
+        [LabelValidation]
         public string? Label { get; set; }
 
         [Display(Name = "Hide label")]
@@ -41,14 +33,14 @@ namespace FormBuilderMVC.DTOs.Base
         public string? LabelClassName { get; set; }
 
         [Display(Name = "Value")]
-        //[ValueValidation]
+        [ValueValidation]
         public string? Value { get; set; }
 
         [Display(Name = "Autofocus")]
         public bool IsAutofocus { get; set; }
 
         [Display(Name = "Placeholder")]
-        //[PlaceholderValidation]
+        [PlaceholderValidation]
         public string? Placeholder { get; set; }
 
         [Display(Name = "Required")]
@@ -56,7 +48,7 @@ namespace FormBuilderMVC.DTOs.Base
         public bool IsRequired { get; set; }
 
         [Display(Name = "Option data")]
-        //[OptionDataValidation]
+        [OptionDataValidation]
         public List<string>? OptionData { get; set; }
     }
 }

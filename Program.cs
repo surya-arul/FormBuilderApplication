@@ -32,6 +32,7 @@ namespace FormBuilderMVC
 
             builder.Services.AddTransient<ISurveyRepository, SurveyRepository>();
             builder.Services.AddTransient<IInputRepository, InputRepository>();
+            builder.Services.AddTransient<IControlRepository, ControlRepository>();
 
             var app = builder.Build();
 

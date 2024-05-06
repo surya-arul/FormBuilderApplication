@@ -10,20 +10,23 @@ namespace FormBuilderMVC.Controllers
     public class InputController : Controller
     {
         private readonly IInputRepository _inputRepository;
+        private readonly IControlRepository _controlRepository;
 
-        public InputController(IInputRepository inputRepository)
+        public InputController(IInputRepository inputRepository, IControlRepository controlRepository)
         {
             _inputRepository = inputRepository;
+            _controlRepository = controlRepository;
         }
 
         #region InputCRUD
 
         #region Create Input
 
-        public IActionResult CreateInput(int surveyId)
+        public async Task<IActionResult> CreateInput(int surveyId)
         {
             try
             {
+                ViewData["ControlsList"] = await _controlRepository.GetAllControlsForDropDown();
                 return View(new InputsDto() { SurveyId = surveyId });
             }
             catch (Exception ex)
@@ -41,7 +44,7 @@ namespace FormBuilderMVC.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    // Check if OptionData has validation errors
+                    /*// Check if OptionData has validation errors
                     if (ModelState.TryGetValue(nameof(InputsDto.OptionData), out var optionDataModelState))
                     {
                         // Clear the OptionData list if it has validation errors
@@ -49,7 +52,7 @@ namespace FormBuilderMVC.Controllers
                         {
                             createInputRequest.OptionData = [];
                         }
-                    }
+                    }*/
                     return View(nameof(CreateInput), createInputRequest);
                 }
 
@@ -69,6 +72,7 @@ namespace FormBuilderMVC.Controllers
         {
             try
             {
+                ViewData["ControlsList"] = await _controlRepository.GetAllControlsForDropDown();
                 var existingInput = await _inputRepository.GetInputById(request);
 
                 if (existingInput == null)
@@ -94,7 +98,7 @@ namespace FormBuilderMVC.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    // Check if OptionData has validation errors
+                    /*// Check if OptionData has validation errors
                     if (ModelState.TryGetValue(nameof(InputsDto.OptionData), out var optionDataModelState))
                     {
                         // Clear the OptionData list if it has validation errors
@@ -102,7 +106,7 @@ namespace FormBuilderMVC.Controllers
                         {
                             updatedInputRequest.OptionData = [];
                         }
-                    }
+                    }*/
                     return View(nameof(EditInput), updatedInputRequest);
                 }
 

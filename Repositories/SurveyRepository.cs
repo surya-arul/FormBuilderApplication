@@ -67,18 +67,7 @@ namespace FormBuilderMVC.Repositories
                         Id = input.Id,
                         SurveyId = input.SurveyId,
                         OrderNo = input.OrderNo,
-                        InputType = input.InputType,
-                        InternalName = input.InternalName,
-                        DivClassName = input.DivClassName,
-                        InputClassName = input.InputClassName,
-                        Label = input.Label,
-                        ShouldHideLabel = input.ShouldHideLabel,
-                        LabelClassName = input.LabelClassName,
-                        Value = input.Value,
-                        IsAutofocus = input.IsAutofocus,
-                        Placeholder = input.Placeholder,
-                        IsRequired = input.IsRequired,
-                        OptionData = !string.IsNullOrEmpty(input.OptionData) ? StringHelper.StringToList(input.OptionData, null) : new List<string>()
+                        ControlId = input.ControlId,
                     }).OrderBy(x => x.OrderNo).ToList()
                 }).FirstOrDefaultAsync();
 

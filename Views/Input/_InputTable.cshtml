@@ -7,9 +7,7 @@
     <thead>
         <tr class="btn-primary">
             <th>Order no</th>
-            <th>Input type</th>
-            <th>Internal name</th>
-            <th>Label</th>
+            <th>Control Id</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -23,13 +21,7 @@
                         @item.OrderNo
                     </td>
                     <td>
-                        @item.InputType
-                    </td>
-                    <td>
-                        @item.InternalName
-                    </td>
-                    <td>
-                        @item.Label
+                        @item.ControlId
                     </td>
                     <td>
                         <a asp-action="@nameof(InputController.EditInput)" asp-controller="@StringHelper.ExtractControllerName(typeof(InputController))" asp-route-id="@item.Id">Edit</a> |

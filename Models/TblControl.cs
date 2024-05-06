@@ -30,4 +30,6 @@ public partial class TblControl
     public bool IsRequired { get; set; }
 
     public string? OptionData { get; set; }
+
+    public virtual ICollection<TblInput> TblInputs { get; set; } = new List<TblInput>();
 }

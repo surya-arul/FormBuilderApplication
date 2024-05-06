@@ -12,6 +12,7 @@ namespace FormBuilderMVC.Repositories
     {
         Task<GetControlResponse> GetControlById(GetControlRequest request);
         Task<GetAllControlsResponse> GetAllControls();
+        Task<List<KeyValuePair<string, string>>> GetAllControlsForDropDown();
         Task<CreateControlResponse> CreateControl(CreateControlRequest request);
         Task<UpdateControlResponse> UpdateControl(UpdateControlRequest request);
         Task<DeleteControlResponse> DeleteControl(DeleteControlRequest request);
@@ -80,6 +81,23 @@ namespace FormBuilderMVC.Repositories
             {
                 Controls = controls
             };
+
+            return response;
+        }
+
+        // Get all controls for dropdown
+        public async Task<List<KeyValuePair<string, string>>> GetAllControlsForDropDown()
+        {
+            var controls = await _context.TblControls
+                .Select(control => new ControlsDto
+                {
+                    Id = control.Id,
+                    InternalName = control.InternalName,
+                }).ToListAsync();
+
+            var response = controls
+                .Select(control => new KeyValuePair<string, string>(control.Id.ToString(), control.InternalName))
+                .ToList();
 
             return response;
         }

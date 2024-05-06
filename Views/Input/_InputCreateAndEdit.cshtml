@@ -8,110 +8,15 @@
     <span asp-validation-for="OrderNo" class="text-danger"></span>
 </div>
 <div class="form-group mb-4">
-    <label asp-for="InputType" class="control-label"></label>
-    <select asp-for="InputType" class="form-control">
-        @foreach (var option in FormBuilderMVC.Utilities.HtmlHelper.HtmlTypeDropdownList)
+    <label asp-for="ControlId" class="control-label"></label>
+    <select asp-for="ControlId" class="form-control">
+        @if (ViewData["ControlsList"] is List<KeyValuePair<string, string>> controlsList)
         {
-            <option value="@option.Key">@option.Value</option>
+            foreach (var option in controlsList)
+            {
+                <option value="@option.Key">@option.Value</option>
+            }
         }
     </select>
-    <span asp-validation-for="InputType" class="text-danger"></span>
+    <span asp-validation-for="ControlId" class="text-danger"></span>
 </div>
-<div class="form-group mb-4">
-    <label asp-for="InternalName" class="control-label"></label>
-    <input asp-for="InternalName" class="form-control" />
-    <span asp-validation-for="InternalName" class="text-danger"></span>
-</div>
-<div class="form-group mb-4">
-    <label asp-for="DivClassName" class="control-label"></label>
-    <input asp-for="DivClassName" class="form-control" />
-    <span asp-validation-for="DivClassName" class="text-danger"></span>
-</div>
-<div class="form-group mb-4">
-    <label asp-for="InputClassName" class="control-label"></label>
-    <input asp-for="InputClassName" class="form-control" />
-    <span asp-validation-for="InputClassName" class="text-danger"></span>
-</div>
-<div class="form-group mb-4">
-    <label asp-for="Label" class="control-label"></label>
-    <input asp-for="Label" class="form-control" />
-    <span asp-validation-for="Label" class="text-danger"></span>
-</div>
-<div class="form-group form-check mb-4">
-    <label class="form-check-label">
-        <input class="form-check-input" asp-for="ShouldHideLabel" />
-        <label asp-for="ShouldHideLabel" class="control-label"></label>
-    </label>
-</div>
-<div class="form-group mb-4">
-    <label asp-for="LabelClassName" class="control-label"></label>
-    <input asp-for="LabelClassName" class="form-control" />
-    <span asp-validation-for="LabelClassName" class="text-danger"></span>
-</div>
-<div class="form-group mb-4">
-    <label asp-for="Value" class="control-label"></label>
-    <input asp-for="Value" class="form-control" />
-    <span asp-validation-for="Value" class="text-danger"></span>
-</div>
-<div class="form-group form-check mb-4">
-    <label class="form-check-label">
-        <input class="form-check-input" asp-for="IsAutofocus" />
-        <label asp-for="IsAutofocus" class="control-label"></label>
-    </label>
-</div>
-<div class="form-group mb-4">
-    <label asp-for="Placeholder" class="control-label"></label>
-    <input asp-for="Placeholder" class="form-control" />
-    <span asp-validation-for="Placeholder" class="text-danger"></span>
-</div>
-<div class="form-group form-check mb-4">
-    <label class="form-check-label">
-        <input class="form-check-input" asp-for="IsRequired" /> 
-        <label asp-for="IsRequired" class="control-label"></label>
-        <span asp-validation-for="IsRequired" class="text-danger"></span>
-    </label>
-</div>
-<div class="form-group mb-4" id="optionDataFields">
-    <label asp-for="OptionData" class="control-label"></label>
-    @if (Model.OptionData is not null && Model.OptionData.Any())
-    {
-        foreach (var option in Model.OptionData)
-        {
-            <div class="form-group mb-4">
-                <input asp-for="OptionData" class="form-control" value="@option" />
-            </div>
-        }
-    }
-    <span asp-validation-for="OptionData" class="text-danger"></span>
-    <button id="addOption" type="button" class="btn btn-link">Add</button>
-    <button id="removeOption" type="button" class="btn btn-link">Remove</button>
-</div>
-
-
-<script>
-    document.getElementById("addOption").addEventListener("click", function () {
-        var optionDataFields = document.getElementById("optionDataFields");
-        var input = document.createElement("input");
-        input.type = "text";
-        input.name = "OptionData";
-        input.className = "form-control";
-        var span = document.createElement("span");
-        span.className = "text-danger";
-        var div = document.createElement("div");
-        div.className = "form-group mb-4";
-        div.appendChild(input);
-        div.appendChild(span);
-        optionDataFields.appendChild(div);
-    });
-
-    document.getElementById("removeOption").addEventListener("click", function () {
-        var optionDataFields = document.getElementById("optionDataFields");
-        var childrenCount = optionDataFields.children.length;
-        if (childrenCount > 1) { // Check if there are more than one child (min 1 field + 1 Remove button)
-            var lastChild = optionDataFields.lastChild;
-            var span = lastChild.querySelector("span"); // Get the corresponding span element
-            optionDataFields.removeChild(lastChild); // Remove the last field
-            optionDataFields.removeChild(span); // Remove the corresponding span element
-        }
-    });
-</script>

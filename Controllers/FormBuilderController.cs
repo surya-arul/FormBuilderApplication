@@ -31,9 +31,9 @@ namespace FormBuilderMVC.Controllers
 
                 var surveyResponse = await _surveyRepository.GetSurveyById(new GetSurveyRequest { Id = request.SurveyId });
 
-                string allHtml = HtmlHelper.GenerateForm(response.Inputs, surveyResponse.Survey);
+                //string allHtml = HtmlHelper.GenerateForm(response.Inputs, surveyResponse.Survey);
 
-                ViewBag.InputTag = allHtml;
+                //ViewBag.InputTag = allHtml;
 
                 return View(nameof(SurveyOutput));
             }

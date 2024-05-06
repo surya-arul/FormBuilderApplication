@@ -59,31 +59,9 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("tblInputs");
 
-            entity.Property(e => e.DivClassName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.InputClassName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.InputType)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.InternalName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.Label)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.LabelClassName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.OptionData).IsUnicode(false);
-            entity.Property(e => e.Placeholder)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.Value)
-                .HasMaxLength(100)
-                .IsUnicode(false);
+            entity.HasOne(d => d.Control).WithMany(p => p.TblInputs)
+                .HasForeignKey(d => d.ControlId)
+                .HasConstraintName("FK_tblInputs_ControlId");
 
             entity.HasOne(d => d.Survey).WithMany(p => p.TblInputs)
                 .HasForeignKey(d => d.SurveyId)

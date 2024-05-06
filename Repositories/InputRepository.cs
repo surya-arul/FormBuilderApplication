@@ -35,18 +35,7 @@ namespace FormBuilderMVC.Repositories
                     Id = input.Id,
                     SurveyId = input.SurveyId,
                     OrderNo = input.OrderNo,
-                    InputType = input.InputType,
-                    InternalName = input.InternalName,
-                    DivClassName = input.DivClassName,
-                    InputClassName = input.InputClassName,
-                    Label = input.Label,
-                    ShouldHideLabel = input.ShouldHideLabel,
-                    LabelClassName = input.LabelClassName,
-                    Value = input.Value,
-                    IsAutofocus = input.IsAutofocus,
-                    Placeholder = input.Placeholder,
-                    IsRequired = input.IsRequired,
-                    OptionData = !string.IsNullOrEmpty(input.OptionData) ? StringHelper.StringToList(input.OptionData, null) : new List<string>()
+                    ControlId = input.ControlId,
                 }).FirstOrDefaultAsync();
 
             var response = new GetInputResponse
@@ -71,18 +60,7 @@ namespace FormBuilderMVC.Repositories
                     Id = input.Id,
                     SurveyId = input.SurveyId,
                     OrderNo = input.OrderNo,
-                    InputType = input.InputType,
-                    InternalName = input.InternalName,
-                    DivClassName = input.DivClassName,
-                    InputClassName = input.InputClassName,
-                    Label = input.Label,
-                    ShouldHideLabel = input.ShouldHideLabel,
-                    LabelClassName = input.LabelClassName,
-                    Value = input.Value,
-                    IsAutofocus = input.IsAutofocus,
-                    Placeholder = input.Placeholder,
-                    IsRequired = input.IsRequired,
-                    OptionData = !string.IsNullOrEmpty(input.OptionData) ? StringHelper.StringToList(input.OptionData, null) : new List<string>()
+                    ControlId = input.ControlId,
                 }).OrderBy(x => x.OrderNo).ToListAsync();
 
             var response = new GetInputsBasedOnSurveyIdResponse
@@ -108,18 +86,7 @@ namespace FormBuilderMVC.Repositories
             {
                 SurveyId = request.Input.SurveyId,
                 OrderNo = request.Input.OrderNo,
-                InputType = request.Input.InputType,
-                InternalName = request.Input.InternalName,
-                DivClassName = request.Input.DivClassName,
-                InputClassName = request.Input.InputClassName,
-                Label = request.Input.Label,
-                ShouldHideLabel = request.Input.ShouldHideLabel,
-                LabelClassName = request.Input.LabelClassName,
-                Value = request.Input.Value,
-                IsAutofocus = request.Input.IsAutofocus,
-                Placeholder = request.Input.Placeholder,
-                IsRequired = request.Input.IsRequired,
-                OptionData = request.Input.OptionData is not null ? string.Join(",", request.Input.OptionData) : string.Empty,
+                ControlId = request.Input.ControlId,
             };
 
             _context.TblInputs.Add(input);
@@ -145,18 +112,7 @@ namespace FormBuilderMVC.Repositories
 
             existingInput.SurveyId = request.Input.SurveyId;
             existingInput.OrderNo = request.Input.OrderNo;
-            existingInput.InputType = request.Input.InputType;
-            existingInput.InternalName = request.Input.InternalName;
-            existingInput.DivClassName = request.Input.DivClassName;
-            existingInput.InputClassName = request.Input.InputClassName;
-            existingInput.Label = request.Input.Label;
-            existingInput.ShouldHideLabel = request.Input.ShouldHideLabel;
-            existingInput.LabelClassName = request.Input.LabelClassName;
-            existingInput.Value = request.Input.Value;
-            existingInput.IsAutofocus = request.Input.IsAutofocus;
-            existingInput.Placeholder = request.Input.Placeholder;
-            existingInput.IsRequired = request.Input.IsRequired;
-            existingInput.OptionData = request.Input.OptionData is not null ? string.Join(",", request.Input.OptionData) : string.Empty;
+            existingInput.ControlId = request.Input.ControlId;
 
             await _context.SaveChangesAsync();
 

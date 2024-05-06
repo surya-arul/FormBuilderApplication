@@ -20,20 +20,10 @@ CREATE TABLE tblSurveys (
 CREATE TABLE tblInputs (
     Id INT IDENTITY(1,1) CONSTRAINT PK_tblInputs_Id PRIMARY KEY,
 	SurveyId INT NOT NULL,
+    ControlId INT NOT NULL,
     OrderNo INT NOT NULL,
-    InputType VARCHAR(100) NOT NULL,
-    InternalName VARCHAR(100) NOT NULL,
-    DivClassName VARCHAR(100) NULL,
-    InputClassName VARCHAR(100) NULL,
-    Label VARCHAR(100) NULL,
-    ShouldHideLabel BIT NOT NULL,
-    LabelClassName VARCHAR(100) NULL,
-    Value VARCHAR(100) NULL,
-    IsAutofocus BIT NOT NULL,
-	Placeholder VARCHAR(100) NULL,
-	IsRequired BIT NOT NULL,
-	OptionData VARCHAR(MAX) NULL,
-    CONSTRAINT FK_tblInputs_SurveyId FOREIGN KEY (SurveyId) REFERENCES tblSurveys(Id) ON DELETE CASCADE -- Foreign key with delete cascade
+    CONSTRAINT FK_tblInputs_SurveyId FOREIGN KEY (SurveyId) REFERENCES tblSurveys(Id) ON DELETE CASCADE, -- Foreign key with delete cascade
+    CONSTRAINT FK_tblInputs_ControlId FOREIGN KEY (ControlId) REFERENCES tblControls(Id) ON DELETE CASCADE -- Foreign key with delete cascade
 );
 
 -- Creating table (tblControls) 

@@ -2,6 +2,7 @@
 using FormBuilderDTO.DTOs.Input;
 using FormBuilderSharedService.DbContexts;
 using FormBuilderSharedService.Models;
+using FormBuilderSharedService.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FormBuilderSharedService.Repositories
@@ -49,21 +50,50 @@ namespace FormBuilderSharedService.Repositories
         {
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Today);
 
-            var inputs = await _context.TblInputs
+            var inputsAndSurvey = await _context.TblInputs
                 .Include(input => input.Survey)
                 .Where(input => input.Survey.EndDate >= currentDate && input.Survey.OpenDate <= currentDate)
                 .Where(input => input.SurveyId == request.SurveyId)
-                .Select(input => new InputsDto
+                .Select(survey => new
                 {
-                    Id = input.Id,
-                    SurveyId = input.SurveyId,
-                    OrderNo = input.OrderNo,
-                    ControlId = input.ControlId,
-                }).OrderBy(x => x.OrderNo).ToListAsync();
+                    Survey = new SurveysDto
+                    {
+                        Id = survey.Survey.Id,
+                        Title = survey.Survey.Title,
+                        OpenDate = survey.Survey.OpenDate,
+                        EndDate = survey.Survey.EndDate,
+                        FormMethod = survey.Survey.FormMethod,
+                        FormAction = survey.Survey.FormAction,
+                    },
+                    Inputs = survey.Survey.TblInputs.Select(input => new GetInputWithControl
+                    {
+                        Id = input.Id,
+                        SurveyId = input.SurveyId,
+                        OrderNo = input.OrderNo,
+                        ControlId = input.ControlId,
+                        Control = new ControlsDto
+                        {
+                            Id = input.Control.Id,
+                            InternalName = input.Control.InternalName,
+                            InputType = input.Control.InputType,
+                            DivClassName = input.Control.DivClassName,
+                            InputClassName = input.Control.InputClassName,
+                            Label = input.Control.Label,
+                            ShouldHideLabel = input.Control.ShouldHideLabel,
+                            LabelClassName = input.Control.LabelClassName,
+                            Value = input.Control.Value,
+                            IsAutofocus = input.Control.IsAutofocus,
+                            Placeholder = input.Control.Placeholder,
+                            IsRequired = input.Control.IsRequired,
+                            OptionData = !string.IsNullOrEmpty(input.Control.OptionData) ? StringHelper.StringToList(input.Control.OptionData, null) : new List<string>()
+                        }
+                    }).OrderBy(x => x.OrderNo).ToList()
+                }).FirstOrDefaultAsync();
 
             var response = new GetInputsBasedOnSurveyIdResponse
             {
-                Inputs = inputs
+                Survey = inputsAndSurvey?.Survey ?? new(),
+                Inputs = inputsAndSurvey?.Inputs ?? []
             };
 
             return response;

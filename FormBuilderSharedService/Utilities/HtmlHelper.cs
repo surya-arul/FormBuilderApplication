@@ -1,5 +1,8 @@
 ﻿using FormBuilderDTO.Constants;
 using FormBuilderDTO.DTOs.Base;
+using FormBuilderDTO.DTOs.Input;
+using System.Data.SqlTypes;
+using System.Xml.Linq;
 
 namespace FormBuilderSharedService.Utilities
 {
@@ -20,7 +23,7 @@ namespace FormBuilderSharedService.Utilities
             new KeyValuePair<HtmlType, string>(HtmlType.SubmitButton, "SubmitButton"),
         ];
 
-        public static string GenerateForm(List<ControlsDto> controls, SurveysDto survey)
+        public static string GenerateForm(List<GetInputWithControl> controls, SurveysDto survey)
         {
             string htmlTagWithForm = string.Empty;
 
@@ -36,19 +39,22 @@ namespace FormBuilderSharedService.Utilities
 
             foreach (var item in controls)
             {
-                if (!Enum.TryParse(item.InputType, true, out HtmlType inputType))
+                if (!Enum.TryParse(item.Control.InputType, true, out HtmlType inputType))
                 {
-                    throw new Exception($"{item.InputType} - {item.InternalName} is not a valid Html type");
+                    throw new Exception($"{item.Control.InputType} - {item.Control.InternalName} is not a valid Html type");
                 }
 
-                string inputTag = GenerateHtmlTag(inputType, item);
+                string inputTag = GenerateHtmlTag(inputType, item.Control);
 
                 htmlTagWithForm += $"{inputTag}";
             }
 
             htmlTagWithForm += $"</form>\n";
 
-            return htmlTagWithForm;
+            // Using XDocument for spacing and indent
+            var htmlXDoc = new XDocument(new XElement(XElement.Parse(htmlTagWithForm)));
+
+            return htmlXDoc.ToString();
         }
 
         private static string GenerateHtmlTag(HtmlType inputType, ControlsDto controls)

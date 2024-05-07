@@ -30,11 +30,9 @@ namespace FormBuilderMVC.Controllers
                     return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to generate survey or current date is not lies between open/end date." });
                 }
 
-                var surveyResponse = await _surveyRepository.GetSurveyById(new GetSurveyRequest { Id = request.SurveyId });
+                string allHtml = HtmlHelper.GenerateForm(response.Inputs, response.Survey);
 
-                //string allHtml = HtmlHelper.GenerateForm(response.Inputs, surveyResponse.Survey);
-
-                //ViewBag.InputTag = allHtml;
+                ViewBag.InputTag = allHtml;
 
                 return View(nameof(SurveyOutput));
             }

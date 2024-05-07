@@ -4,6 +4,7 @@ namespace FormBuilderDTO.DTOs.Input
 {
     public class GetInputsBasedOnSurveyIdResponse
     {
-        public List<InputsDto> Inputs { get; set; } = new();
+        public SurveysDto Survey { get; set; } = new();
+        public List<GetInputWithControl> Inputs { get; set; } = new();
     }
 }

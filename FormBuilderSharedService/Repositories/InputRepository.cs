@@ -45,7 +45,7 @@ namespace FormBuilderSharedService.Repositories
             return response;
         }
 
-        // Get inputs based on survey id
+        // Get inputs and survey based on survey id
         public async Task<GetInputsBasedOnSurveyIdResponse> GetInputsBySurveyId(GetInputsBasedOnSurveyIdRequest request)
         {
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Today);

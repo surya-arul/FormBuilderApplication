@@ -45,7 +45,7 @@ namespace FormBuilderSharedService.Repositories
             return response;
         }
 
-        // Get survey based on id
+        // Get survey and input with control name based on id
         public async Task<GetSurveyResponse> GetSurveyById(GetSurveyRequest request)
         {
             var surveyData = await _context.TblSurveys

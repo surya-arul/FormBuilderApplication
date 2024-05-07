@@ -1,4 +1,5 @@
 ﻿using FormBuilderDTO.DTOs.Base;
+using FormBuilderDTO.DTOs.Input;
 using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.DbContexts;
 using FormBuilderSharedService.Models;
@@ -60,12 +61,16 @@ namespace FormBuilderSharedService.Repositories
                         FormMethod = survey.FormMethod,
                         FormAction = survey.FormAction,
                     },
-                    Inputs = survey.TblInputs.Select(input => new InputsDto
+                    Inputs = survey.TblInputs.Select(input => new GetInputWithControl
                     {
                         Id = input.Id,
                         SurveyId = input.SurveyId,
                         OrderNo = input.OrderNo,
                         ControlId = input.ControlId,
+                        Control = new ControlsDto
+                        {
+                            InternalName = input.Control.InternalName,
+                        }
                     }).OrderBy(x => x.OrderNo).ToList()
                 }).FirstOrDefaultAsync();
 

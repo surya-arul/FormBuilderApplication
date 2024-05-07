@@ -1,7 +1,7 @@
-﻿@using FormBuilderDTO.DTOs.Base
+﻿@using FormBuilderDTO.DTOs.Input
 @using FormBuilderMVC.Controllers
 @using FormBuilderSharedService.Utilities
-@model List<InputsDto>
+@model List<GetInputWithControl>
 
 <table border="1" class="table table-bordered table-responsive">
     <thead>
@@ -21,7 +21,7 @@
                         @item.OrderNo
                     </td>
                     <td>
-                        @item.ControlId
+                        @item.Control.InternalName
                     </td>
                     <td>
                         <a asp-action="@nameof(InputController.EditInput)" asp-controller="@StringHelper.ExtractControllerName(typeof(InputController))" asp-route-id="@item.Id">Edit</a> |

@@ -1,5 +1,4 @@
-﻿using FormBuilderMVC.DTOs.Base;
-using FormBuilderMVC.DTOs.Request;
+﻿using FormBuilderMVC.DTOs.Request;
 using FormBuilderMVC.Models;
 using FormBuilderMVC.Repositories;
 using FormBuilderMVC.Utilities;
@@ -41,7 +40,7 @@ namespace FormBuilderMVC.Controllers
         {
             try
             {
-                return View(new ControlsDto());
+                return View(new CreateControlRequest());
             }
             catch (Exception ex)
             {
@@ -51,7 +50,7 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddControl(ControlsDto createControlRequest)
+        public async Task<IActionResult> AddControl(CreateControlRequest createControlRequest)
         {
             try
             {
@@ -60,7 +59,7 @@ namespace FormBuilderMVC.Controllers
                     return View(nameof(CreateControl), createControlRequest);
                 }
 
-                var response = await _controlRepository.CreateControl(new CreateControlRequest { Control = createControlRequest });
+                var response = await _controlRepository.CreateControl(createControlRequest);
                 return RedirectToAction(nameof(Controls));
             }
             catch (Exception ex)
@@ -84,9 +83,8 @@ namespace FormBuilderMVC.Controllers
                     return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to edit." });
                 }
 
-                var controlDto = control.Control;
+                return View(new UpdateControlRequest { Control = control.Control });
 
-                return View(controlDto);
             }
             catch (Exception ex)
             {
@@ -96,7 +94,7 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateControl(ControlsDto updatedControlRequest)
+        public async Task<IActionResult> UpdateControl(UpdateControlRequest updatedControlRequest)
         {
             try
             {
@@ -105,7 +103,7 @@ namespace FormBuilderMVC.Controllers
                     return View(nameof(EditControl), updatedControlRequest);
                 }
 
-                var response = await _controlRepository.UpdateControl(new UpdateControlRequest() { Control = updatedControlRequest });
+                var response = await _controlRepository.UpdateControl(updatedControlRequest);
 
                 return RedirectToAction(nameof(Controls));
             }

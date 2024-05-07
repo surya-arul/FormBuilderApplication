@@ -1,6 +1,6 @@
 ﻿@using FormBuilderMVC.Controllers
 @using FormBuilderMVC.Utilities
-@model FormBuilderMVC.DTOs.Base.ControlsDto
+@model FormBuilderMVC.DTOs.Request.CreateControlRequest
 
 @{
     ViewData["Title"] = "Create Control";
@@ -12,7 +12,7 @@
     <form asp-action="@nameof(ControlsController.AddControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <partial name="_ControlCreateAndEdit" />
+        <partial name="_ControlCreateAndEdit" for="@Model.Control" />
 
         <div class="form-group mb-4">
             <input type="submit" value="Create control" class="btn btn-primary" />

@@ -1,6 +1,6 @@
 ﻿@using FormBuilderMVC.Controllers
 @using FormBuilderMVC.Utilities
-@model FormBuilderMVC.DTOs.Base.ControlsDto
+@model FormBuilderMVC.DTOs.Request.UpdateControlRequest
 
 @{
     ViewData["Title"] = "Edit Control";
@@ -9,10 +9,10 @@
 <h4>Edit Control</h4>
 <hr />
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="@nameof(ControlsController.UpdateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" asp-route-id="@Model.Id" method="post">
+    <form asp-action="@nameof(ControlsController.UpdateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" asp-route-Control.Id="@Model.Control.Id" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <partial name="_ControlCreateAndEdit" />
+        <partial name="_ControlCreateAndEdit" for="@Model.Control" />
 
         <div class="form-group mb-4">
             <input type="submit" value="Update control" class="btn btn-primary" />

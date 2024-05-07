@@ -20,14 +20,19 @@ namespace FormBuilderMVC.Controllers
 
         #region InputCRUD
 
+        private async Task PopulateControlsListInViewData()
+        {
+            ViewData["ControlsList"] = await _controlRepository.GetAllControlsForDropDown();
+        }
+
         #region Create Input
 
         public async Task<IActionResult> CreateInput(int surveyId)
         {
             try
             {
-                ViewData["ControlsList"] = await _controlRepository.GetAllControlsForDropDown();
-                return View(new InputsDto() { SurveyId = surveyId });
+                await PopulateControlsListInViewData();
+                return View(new CreateInputRequest() { Input = new InputsDto { SurveyId = surveyId } });
             }
             catch (Exception ex)
             {
@@ -38,7 +43,7 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddInput(InputsDto createInputRequest)
+        public async Task<IActionResult> AddInput(CreateInputRequest createInputRequest)
         {
             try
             {
@@ -53,11 +58,13 @@ namespace FormBuilderMVC.Controllers
                             createInputRequest.OptionData = [];
                         }
                     }*/
+
+                    await PopulateControlsListInViewData();
                     return View(nameof(CreateInput), createInputRequest);
                 }
 
-                var response = await _inputRepository.CreateInput(new CreateInputRequest { Input = createInputRequest });
-                return RedirectToAction(nameof(SurveyController.SurveyDashboard), StringHelper.ExtractControllerName(typeof(SurveyController)), new { id = createInputRequest.SurveyId });
+                var response = await _inputRepository.CreateInput(createInputRequest);
+                return RedirectToAction(nameof(SurveyController.SurveyDashboard), StringHelper.ExtractControllerName(typeof(SurveyController)), new { id = createInputRequest.Input.SurveyId });
             }
             catch (Exception ex)
             {
@@ -72,7 +79,7 @@ namespace FormBuilderMVC.Controllers
         {
             try
             {
-                ViewData["ControlsList"] = await _controlRepository.GetAllControlsForDropDown();
+                await PopulateControlsListInViewData();
                 var existingInput = await _inputRepository.GetInputById(request);
 
                 if (existingInput == null)
@@ -80,9 +87,7 @@ namespace FormBuilderMVC.Controllers
                     return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to edit." });
                 }
 
-                var inputDto = existingInput.Input;
-
-                return View(inputDto);
+                return View(new UpdateInputRequest { Input = existingInput.Input });
             }
             catch (Exception ex)
             {
@@ -92,7 +97,7 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateInput(InputsDto updatedInputRequest)
+        public async Task<IActionResult> UpdateInput(UpdateInputRequest updatedInputRequest)
         {
             try
             {
@@ -107,12 +112,13 @@ namespace FormBuilderMVC.Controllers
                             updatedInputRequest.OptionData = [];
                         }
                     }*/
+                    await PopulateControlsListInViewData();
                     return View(nameof(EditInput), updatedInputRequest);
                 }
 
-                var response = await _inputRepository.UpdateInput(new UpdateInputRequest() { Input = updatedInputRequest });
+                var response = await _inputRepository.UpdateInput(updatedInputRequest);
 
-                return RedirectToAction(nameof(SurveyController.SurveyDashboard), StringHelper.ExtractControllerName(typeof(SurveyController)), new { id = updatedInputRequest.SurveyId });
+                return RedirectToAction(nameof(SurveyController.SurveyDashboard), StringHelper.ExtractControllerName(typeof(SurveyController)), new { id = updatedInputRequest.Input.SurveyId });
             }
             catch (Exception ex)
             {

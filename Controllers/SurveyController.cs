@@ -1,5 +1,4 @@
-﻿using FormBuilderMVC.DTOs.Base;
-using FormBuilderMVC.DTOs.Request;
+﻿using FormBuilderMVC.DTOs.Request;
 using FormBuilderMVC.Models;
 using FormBuilderMVC.Repositories;
 using FormBuilderMVC.Utilities;
@@ -54,7 +53,7 @@ namespace FormBuilderMVC.Controllers
         {
             try
             {
-                return View(new SurveysDto());
+                return View(new CreateSurveyRequest());
             }
             catch (Exception ex)
             {
@@ -64,7 +63,7 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddSurvey(SurveysDto createSurveyRequest)
+        public async Task<IActionResult> AddSurvey(CreateSurveyRequest createSurveyRequest)
         {
             try
             {
@@ -73,7 +72,7 @@ namespace FormBuilderMVC.Controllers
                     return View(nameof(CreateSurvey), createSurveyRequest);
                 }
 
-                var response = await _surveyRepository.CreateSurvey(new CreateSurveyRequest { Survey = createSurveyRequest });
+                var response = await _surveyRepository.CreateSurvey(createSurveyRequest);
                 return RedirectToAction(nameof(Surveys));
             }
             catch (Exception ex)
@@ -97,9 +96,7 @@ namespace FormBuilderMVC.Controllers
                     return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to edit." });
                 }
 
-                var surveyDto = survey.Survey;
-
-                return View(surveyDto);
+                return View(new UpdateSurveyRequest { Survey = survey.Survey });
             }
             catch (Exception ex)
             {
@@ -109,7 +106,7 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateSurvey(SurveysDto updatedSurveyRequest)
+        public async Task<IActionResult> UpdateSurvey(UpdateSurveyRequest updatedSurveyRequest)
         {
             try
             {
@@ -118,7 +115,7 @@ namespace FormBuilderMVC.Controllers
                     return View(nameof(EditSurvey), updatedSurveyRequest);
                 }
 
-                var response = await _surveyRepository.UpdateSurvey(new UpdateSurveyRequest() { Survey = updatedSurveyRequest });
+                var response = await _surveyRepository.UpdateSurvey(updatedSurveyRequest);
 
                 return RedirectToAction(nameof(Surveys));
             }

@@ -1,4 +1,4 @@
-﻿namespace FormBuilderDTO.DTOs.Request
+﻿namespace FormBuilderDTO.DTOs.Survey
 {
     public class DeleteSurveyRequest
     {

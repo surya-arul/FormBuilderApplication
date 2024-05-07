@@ -1,4 +1,4 @@
-﻿using FormBuilderDTO.DTOs.Request;
+﻿using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.Models;
 using FormBuilderSharedService.Repositories;
 using FormBuilderSharedService.Utilities;

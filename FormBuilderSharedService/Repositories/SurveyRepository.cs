@@ -1,6 +1,5 @@
 ﻿using FormBuilderDTO.DTOs.Base;
-using FormBuilderDTO.DTOs.Request;
-using FormBuilderDTO.DTOs.Response;
+using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.DbContexts;
 using FormBuilderSharedService.Models;
 using Microsoft.EntityFrameworkCore;

@@ -1,8 +1,8 @@
 ﻿using FormBuilderDTO.DTOs.Base;
 
-namespace FormBuilderDTO.DTOs.Request
+namespace FormBuilderDTO.DTOs.Input
 {
-    public class UpdateInputRequest
+    public class GetInputResponse
     {
         public InputsDto Input { get; set; } = new();
     }

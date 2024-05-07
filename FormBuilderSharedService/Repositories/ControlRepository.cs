@@ -1,6 +1,5 @@
 ﻿using FormBuilderDTO.DTOs.Base;
-using FormBuilderDTO.DTOs.Request;
-using FormBuilderDTO.DTOs.Response;
+using FormBuilderDTO.DTOs.Control;
 using FormBuilderSharedService.DbContexts;
 using FormBuilderSharedService.Models;
 using FormBuilderSharedService.Utilities;

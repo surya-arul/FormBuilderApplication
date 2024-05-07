@@ -1,6 +1,6 @@
 ﻿using FormBuilderDTO.DTOs.Base;
 
-namespace FormBuilderDTO.DTOs.Response
+namespace FormBuilderDTO.DTOs.Survey
 {
     public class DeleteSurveyResponse : DeleteResponseBase
     {

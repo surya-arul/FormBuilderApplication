@@ -1,6 +1,6 @@
 ﻿using FormBuilderDTO.DTOs.Base;
 
-namespace FormBuilderDTO.DTOs.Request
+namespace FormBuilderDTO.DTOs.Survey
 {
     public class UpdateSurveyRequest
     {

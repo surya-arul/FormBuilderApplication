@@ -1,8 +1,8 @@
 ﻿using FormBuilderDTO.DTOs.Base;
 
-namespace FormBuilderDTO.DTOs.Request
+namespace FormBuilderDTO.DTOs.Control
 {
-    public class CreateControlRequest
+    public class UpdateControlRequest
     {
         public ControlsDto Control { get; set; } = new();
     }

@@ -1,5 +1,5 @@
 ﻿using FormBuilderDTO.DTOs.Base;
-using FormBuilderDTO.DTOs.Request;
+using FormBuilderDTO.DTOs.Input;
 using FormBuilderSharedService.Models;
 using FormBuilderSharedService.Repositories;
 using FormBuilderSharedService.Utilities;

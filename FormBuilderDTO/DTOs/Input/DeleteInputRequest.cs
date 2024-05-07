@@ -1,4 +1,4 @@
-﻿namespace FormBuilderDTO.DTOs.Request
+﻿namespace FormBuilderDTO.DTOs.Input
 {
     public class DeleteInputRequest
     {

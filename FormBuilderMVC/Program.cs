@@ -1,6 +1,6 @@
-using FormBuilderMVC.DbContexts;
-using FormBuilderMVC.DTOs.Config;
-using FormBuilderMVC.Repositories;
+using FormBuilderDTO.DTOs.Config;
+using FormBuilderSharedService.DbContexts;
+using FormBuilderSharedService.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

@@ -1,4 +1,4 @@
-using FormBuilderMVC.Models;
+using FormBuilderSharedService.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormBuilderMVC.Controllers

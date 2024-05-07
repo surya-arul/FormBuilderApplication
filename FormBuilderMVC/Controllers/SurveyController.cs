@@ -1,7 +1,7 @@
-﻿using FormBuilderMVC.DTOs.Request;
-using FormBuilderMVC.Models;
-using FormBuilderMVC.Repositories;
-using FormBuilderMVC.Utilities;
+﻿using FormBuilderDTO.DTOs.Request;
+using FormBuilderSharedService.Models;
+using FormBuilderSharedService.Repositories;
+using FormBuilderSharedService.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormBuilderMVC.Controllers

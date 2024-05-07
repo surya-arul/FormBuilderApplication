@@ -1,5 +1,5 @@
-﻿@using FormBuilderMVC.DTOs.Base
-@using FormBuilderMVC.Utilities
+﻿@using FormBuilderDTO.DTOs.Base
+@using FormBuilderSharedService.Utilities
 @model ControlsDto
 
 <div class="form-group mb-4">
@@ -10,7 +10,7 @@
 <div class="form-group mb-4">
     <label asp-for="InputType" class="control-label"></label>
     <select asp-for="InputType" class="form-control">
-        @foreach (var option in FormBuilderMVC.Utilities.HtmlHelper.HtmlTypeDropdownList)
+        @foreach (var option in FormBuilderSharedService.Utilities.HtmlHelper.HtmlTypeDropdownList)
         {
             <option value="@option.Key">@option.Value</option>
         }

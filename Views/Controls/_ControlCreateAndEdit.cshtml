@@ -3,6 +3,11 @@
 @model ControlsDto
 
 <div class="form-group mb-4">
+    <label asp-for="InternalName" class="control-label"></label>
+    <input asp-for="InternalName" class="form-control" />
+    <span asp-validation-for="InternalName" class="text-danger"></span>
+</div>
+<div class="form-group mb-4">
     <label asp-for="InputType" class="control-label"></label>
     <select asp-for="InputType" class="form-control">
         @foreach (var option in FormBuilderMVC.Utilities.HtmlHelper.HtmlTypeDropdownList)
@@ -11,11 +16,6 @@
         }
     </select>
     <span asp-validation-for="InputType" class="text-danger"></span>
-</div>
-<div class="form-group mb-4">
-    <label asp-for="InternalName" class="control-label"></label>
-    <input asp-for="InternalName" class="form-control" />
-    <span asp-validation-for="InternalName" class="text-danger"></span>
 </div>
 <div class="form-group mb-4">
     <label asp-for="DivClassName" class="control-label"></label>
@@ -66,17 +66,13 @@
         <span asp-validation-for="IsRequired" class="text-danger"></span>
     </label>
 </div>
-<div class="form-group mb-4" id="optionDataFields">
+<div class="form-group mb-4">
     <label asp-for="OptionData" class="control-label"></label>
-    @if (Model.OptionData is not null && Model.OptionData.Any())
-    {
-        foreach (var option in Model.OptionData)
-        {
-            <div class="form-group mb-4">
-                <input asp-for="OptionData" class="form-control" value="@option" />
-            </div>
-        }
-    }
+
+    <div id="optionDataContainer">
+        <!-- Option data will be dynamically added here -->
+    </div>
+
     <span asp-validation-for="OptionData" class="text-danger"></span>
     <button id="addOption" type="button" class="btn btn-link">Add</button>
     <button id="removeOption" type="button" class="btn btn-link">Remove</button>
@@ -84,29 +80,46 @@
 
 
 <script>
-    document.getElementById("addOption").addEventListener("click", function () {
-        var optionDataFields = document.getElementById("optionDataFields");
-        var input = document.createElement("input");
-        input.type = "text";
-        input.name = "OptionData";
-        input.className = "form-control";
-        var span = document.createElement("span");
-        span.className = "text-danger";
-        var div = document.createElement("div");
-        div.className = "form-group mb-4";
-        div.appendChild(input);
-        div.appendChild(span);
-        optionDataFields.appendChild(div);
-    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const optionDataContainer = document.getElementById("optionDataContainer");
 
-    document.getElementById("removeOption").addEventListener("click", function () {
-        var optionDataFields = document.getElementById("optionDataFields");
-        var childrenCount = optionDataFields.children.length;
-        if (childrenCount > 1) { // Check if there are more than one child (min 1 field + 1 Remove button)
-            var lastChild = optionDataFields.lastChild;
-            var span = lastChild.querySelector("span"); // Get the corresponding span element
-            optionDataFields.removeChild(lastChild); // Remove the last field
-            optionDataFields.removeChild(span); // Remove the corresponding span element
+        // Function to create a new option data field
+        function createOptionDataField(value = "") {
+            const div = document.createElement("div");
+            div.className = "form-group mb-4";
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            input.id = "Control_OptionData";
+            input.name = "Control.OptionData"; // Set the name attribute
+            input.value = value;
+
+            div.appendChild(input);
+
+            return div;
         }
+
+        // Populate option data values
+    @if (Model.OptionData is not null && Model.OptionData.Any())
+    {
+        foreach (var option in Model.OptionData)
+        {
+            @:optionDataContainer.appendChild(createOptionDataField("@option"));
+        }
+    }
+
+        // Add option data field
+        document.getElementById("addOption").addEventListener("click", function () {
+            optionDataContainer.appendChild(createOptionDataField());
+        });
+
+        // Remove option data field
+        document.getElementById("removeOption").addEventListener("click", function () {
+            const childrenCount = optionDataContainer.children.length;
+            if (childrenCount > 0) { // Ensure at least one field remains
+                optionDataContainer.removeChild(optionDataContainer.lastElementChild);
+            }
+        });
     });
 </script>

@@ -51,7 +51,7 @@
                         <td>
                             <a asp-action="@nameof(SurveyController.EditSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" asp-route-id="@item.Id">Edit</a> |
                             <a asp-action="@nameof(SurveyController.DeleteSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" asp-route-id="@item.Id">Delete</a> |
-                            <a asp-action="@nameof(FormBuilderController.PreviewSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-surveyId="@item.Id">Preview</a>
+                            <a asp-action="@nameof(FormBuilderController.PreviewSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-id="@item.Id">Preview</a>
                         </td>
                     </tr>
                 }

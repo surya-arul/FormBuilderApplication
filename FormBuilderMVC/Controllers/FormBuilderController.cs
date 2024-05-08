@@ -1,5 +1,4 @@
-﻿using FormBuilderDTO.DTOs.Input;
-using FormBuilderDTO.DTOs.Survey;
+﻿using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.Models;
 using FormBuilderSharedService.Repositories;
 using FormBuilderSharedService.Utilities;
@@ -10,20 +9,18 @@ namespace FormBuilderMVC.Controllers
     public class FormBuilderController : Controller
     {
         private readonly ISurveyRepository _surveyRepository;
-        private readonly IInputRepository _inputRepository;
 
-        public FormBuilderController(ISurveyRepository surveyRepository, IInputRepository inputRepository)
+        public FormBuilderController(ISurveyRepository surveyRepository)
         {
             _surveyRepository = surveyRepository;
-            _inputRepository = inputRepository;
         }
 
         #region FormDesign
-        public async Task<IActionResult> PreviewSurvey(GetInputsBasedOnSurveyIdRequest request)
+        public async Task<IActionResult> PreviewSurvey(GetSurveyRequest request)
         {
             try
             {
-                var response = await _inputRepository.GetInputsBySurveyId(request);
+                var response = await _surveyRepository.GetSurveyById(request);
 
                 if (response is null || response.Inputs.Count is 0)
                 {

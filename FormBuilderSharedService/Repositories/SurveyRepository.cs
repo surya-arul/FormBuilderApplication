@@ -3,6 +3,7 @@ using FormBuilderDTO.DTOs.Input;
 using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.DbContexts;
 using FormBuilderSharedService.Models;
+using FormBuilderSharedService.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FormBuilderSharedService.Repositories
@@ -69,7 +70,19 @@ namespace FormBuilderSharedService.Repositories
                         ControlId = input.ControlId,
                         Control = new ControlsDto
                         {
+                            Id = input.Control.Id,
                             InternalName = input.Control.InternalName,
+                            InputType = input.Control.InputType,
+                            DivClassName = input.Control.DivClassName,
+                            InputClassName = input.Control.InputClassName,
+                            Label = input.Control.Label,
+                            ShouldHideLabel = input.Control.ShouldHideLabel,
+                            LabelClassName = input.Control.LabelClassName,
+                            Value = input.Control.Value,
+                            IsAutofocus = input.Control.IsAutofocus,
+                            Placeholder = input.Control.Placeholder,
+                            IsRequired = input.Control.IsRequired,
+                            OptionData = !string.IsNullOrEmpty(input.Control.OptionData) ? StringHelper.StringToList(input.Control.OptionData, null) : new List<string>()
                         }
                     }).OrderBy(x => x.OrderNo).ToList()
                 }).FirstOrDefaultAsync();

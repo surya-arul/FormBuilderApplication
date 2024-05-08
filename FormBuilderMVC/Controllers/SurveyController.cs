@@ -1,5 +1,4 @@
 ﻿using FormBuilderDTO.DTOs.Base;
-using FormBuilderDTO.DTOs.Input;
 using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.Models;
 using FormBuilderSharedService.Repositories;
@@ -12,13 +11,11 @@ namespace FormBuilderMVC.Controllers
     {
         private readonly ISurveyRepository _surveyRepository;
         private readonly IControlRepository _controlRepository;
-        private CreateSurveyRequest _createSurveyRequest;
 
         public SurveyController(ISurveyRepository surveyRepository, IControlRepository controlRepository)
         {
             _surveyRepository = surveyRepository;
             _controlRepository = controlRepository;
-            _createSurveyRequest = new CreateSurveyRequest();
         }
 
         private async Task PopulateControlsListInViewData()
@@ -52,8 +49,7 @@ namespace FormBuilderMVC.Controllers
             try
             {
                 await PopulateControlsListInViewData();
-                _createSurveyRequest = new CreateSurveyRequest();
-                return View(_createSurveyRequest);
+                return View(new CreateSurveyRequest());
             }
             catch (Exception ex)
             {

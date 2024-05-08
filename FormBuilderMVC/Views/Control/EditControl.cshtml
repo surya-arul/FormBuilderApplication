@@ -10,7 +10,7 @@
 <h4>Edit Control</h4>
 <hr />
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="@nameof(ControlsController.UpdateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" asp-route-Control.Id="@Model.Control.Id" method="post">
+    <form asp-action="@nameof(ControlController.UpdateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" asp-route-Control.Id="@Model.Control.Id" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <partial name="_ControlCreateAndEdit" for="@Model.Control" />

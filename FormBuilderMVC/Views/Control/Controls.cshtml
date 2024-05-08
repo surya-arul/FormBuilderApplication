@@ -14,7 +14,7 @@
 
     <div class="row mb-3">
         <div class="col-md-2">
-            <a asp-action="@nameof(ControlsController.CreateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" class="btn btn-warning">Create control</a>
+            <a asp-action="@nameof(ControlController.CreateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" class="btn btn-warning">Create control</a>
         </div>
     </div>
 
@@ -43,8 +43,8 @@
                             @item.InputType
                         </td>
                         <td>
-                            <a asp-action="@nameof(ControlsController.EditControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="@nameof(ControlsController.DeleteControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" asp-route-id="@item.Id">Delete</a> |
+                            <a asp-action="@nameof(ControlController.EditControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="@nameof(ControlController.DeleteControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" asp-route-id="@item.Id">Delete</a> |
                         </td>
                     </tr>
                 }

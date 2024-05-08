@@ -10,7 +10,7 @@
 <h4>Create Control</h4>
 <hr />
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="@nameof(ControlsController.AddControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlsController))" method="post">
+    <form asp-action="@nameof(ControlController.AddControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <partial name="_ControlCreateAndEdit" for="@Model.Control" />

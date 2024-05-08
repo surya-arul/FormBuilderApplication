@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FormBuilderMVC.Controllers
 {
-    public class ControlsController : Controller
+    public class ControlController : Controller
     {
         private readonly IControlRepository _controlRepository;
 
-        public ControlsController(IControlRepository controlRepository)
+        public ControlController(IControlRepository controlRepository)
         {
             _controlRepository = controlRepository;
         }

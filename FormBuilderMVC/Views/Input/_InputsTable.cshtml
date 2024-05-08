@@ -1,0 +1,80 @@
+﻿@using FormBuilderDTO.DTOs.Base
+@model List<InputsDto>
+
+<table border="1" class="table table-bordered table-responsive" id="inputsTable">
+    <thead>
+        <tr class="btn-primary">
+            <th>Order no</th>
+            <th>Control Id</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="inputRows">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    <input type="hidden" asp-for="@Model[i].Id" class="form-control" />
+                    <input asp-for="@Model[i].OrderNo" class="form-control" />
+                    <span asp-validation-for="@Model[i].OrderNo" class="text-danger"></span>
+                </td>
+                <td>
+
+                    <select asp-for="@Model[i].ControlId" class="form-control">
+                        @if (ViewData["ControlsList"] is List<KeyValuePair<string, string>> controlsLists)
+                        {
+                            foreach (var option in controlsLists)
+                            {
+                                <option value="@option.Key">@option.Value</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="@Model[i].ControlId" class="text-danger"></span>
+                </td>
+                <td>
+                    <button class="removeInput btn btn-link" type="button">Remove input</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button id="addInput" type="button" class="btn btn-link">Add input</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var addInputButton = document.getElementById('addInput');
+        var inputRows = document.getElementById('inputRows');
+
+        addInputButton.addEventListener('click', function () {
+            var index = inputRows.children.length; // Get the number of existing input rows
+            var newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                            <td>
+                            <input name="Inputs[${index}].OrderNo" class="form-control" type="number" value="0" />
+                            </td>
+                            <td>
+                            <select name="Inputs[${index}].ControlId" class="form-control">
+                            @if (ViewData["ControlsList"] is List<KeyValuePair<string, string>> controlsList)
+                            {
+                                foreach (var option in controlsList)
+                                {
+                                    <option value="@option.Key">@option.Value</option>
+                                }
+                            }
+                            </select>
+                            </td>
+                            <td>
+                            <button class="removeInput btn btn-link" type="button">Remove input</button>
+                            </td>
+                            `;
+            inputRows.appendChild(newRow);
+        });
+
+        document.addEventListener('click', function (event) {
+            if (event.target && event.target.classList.contains('removeInput')) {
+                event.target.closest('tr').remove();
+            }
+        });
+    });
+</script>

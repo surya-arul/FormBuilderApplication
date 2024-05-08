@@ -8,7 +8,6 @@ namespace FormBuilderDTO.DTOs.Base
         public int Id { get; set; }
 
         [Display(Name = "Survey id")]
-        [Range(1, int.MaxValue, ErrorMessage = "Should not be zero.")]
         public int SurveyId { get; set; }
 
         [Display(Name = "Control id")]
@@ -18,7 +17,5 @@ namespace FormBuilderDTO.DTOs.Base
         [Display(Name = "Order no")]
         [Range(1, int.MaxValue, ErrorMessage = "Should not be zero.")]
         public int OrderNo { get; set; }
-
-        //public ControlsDto Control { get; set; } = new();
     }
 }

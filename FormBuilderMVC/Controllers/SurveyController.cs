@@ -1,4 +1,6 @@
-﻿using FormBuilderDTO.DTOs.Survey;
+﻿using FormBuilderDTO.DTOs.Base;
+using FormBuilderDTO.DTOs.Input;
+using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.Models;
 using FormBuilderSharedService.Repositories;
 using FormBuilderSharedService.Utilities;
@@ -9,10 +11,19 @@ namespace FormBuilderMVC.Controllers
     public class SurveyController : Controller
     {
         private readonly ISurveyRepository _surveyRepository;
+        private readonly IControlRepository _controlRepository;
+        private CreateSurveyRequest _createSurveyRequest;
 
-        public SurveyController(ISurveyRepository surveyRepository)
+        public SurveyController(ISurveyRepository surveyRepository, IControlRepository controlRepository)
         {
             _surveyRepository = surveyRepository;
+            _controlRepository = controlRepository;
+            _createSurveyRequest = new CreateSurveyRequest();
+        }
+
+        private async Task PopulateControlsListInViewData()
+        {
+            ViewData["ControlsList"] = await _controlRepository.GetAllControlsForDropDown();
         }
 
         #region SurveyCRUD
@@ -32,28 +43,17 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
-        public async Task<IActionResult> SurveyDashboard(GetSurveyRequest request)
-        {
-            try
-            {
-                var response = await _surveyRepository.GetSurveyById(request);
-                return View(response);
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = ex.Message });
-            }
-        }
-
         #endregion
 
         #region Create Survey
 
-        public IActionResult CreateSurvey()
+        public async Task<IActionResult> CreateSurvey()
         {
             try
             {
-                return View(new CreateSurveyRequest());
+                await PopulateControlsListInViewData();
+                _createSurveyRequest = new CreateSurveyRequest();
+                return View(_createSurveyRequest);
             }
             catch (Exception ex)
             {
@@ -69,6 +69,7 @@ namespace FormBuilderMVC.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    await PopulateControlsListInViewData();
                     return View(nameof(CreateSurvey), createSurveyRequest);
                 }
 
@@ -89,6 +90,7 @@ namespace FormBuilderMVC.Controllers
         {
             try
             {
+                await PopulateControlsListInViewData();
                 var survey = await _surveyRepository.GetSurveyById(request);
 
                 if (survey is null)
@@ -96,7 +98,17 @@ namespace FormBuilderMVC.Controllers
                     return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to edit." });
                 }
 
-                return View(new UpdateSurveyRequest { Survey = survey.Survey });
+                return View(new UpdateSurveyRequest 
+                { 
+                    Survey = survey.Survey, 
+                    Inputs = survey.Inputs.Select(input => new InputsDto
+                    {
+                        Id = input.Id,
+                        SurveyId = input.SurveyId,
+                        OrderNo = input.OrderNo,
+                        ControlId = input.ControlId,
+                    }).ToList()
+                });
             }
             catch (Exception ex)
             {
@@ -112,6 +124,7 @@ namespace FormBuilderMVC.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    await PopulateControlsListInViewData();
                     return View(nameof(EditSurvey), updatedSurveyRequest);
                 }
 

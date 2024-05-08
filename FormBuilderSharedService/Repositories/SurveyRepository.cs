@@ -102,6 +102,11 @@ namespace FormBuilderSharedService.Repositories
                 EndDate = request.Survey.EndDate,
                 FormMethod = request.Survey.FormMethod,
                 FormAction = request.Survey.FormAction,
+                TblInputs = request.Inputs.Select(input => new TblInput
+                {
+                    ControlId = input.ControlId,
+                    OrderNo = input.OrderNo,
+                }).ToList()
             };
 
             _context.TblSurveys.Add(survey);
@@ -114,9 +119,8 @@ namespace FormBuilderSharedService.Repositories
         public async Task<UpdateSurveyResponse> UpdateSurvey(UpdateSurveyRequest request)
         {
             var existingSurvey = await _context.TblSurveys
-                    .Where(survey => survey.Id == request.Survey.Id)
                     .Include(input => input.TblInputs)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(survey => survey.Id == request.Survey.Id);
 
             if (existingSurvey is null)
             {
@@ -126,11 +130,42 @@ namespace FormBuilderSharedService.Repositories
                 };
             }
 
+            // Update survey details
             existingSurvey.Title = request.Survey.Title;
             existingSurvey.OpenDate = request.Survey.OpenDate;
             existingSurvey.EndDate = request.Survey.EndDate;
             existingSurvey.FormMethod = request.Survey.FormMethod;
             existingSurvey.FormAction = request.Survey.FormAction;
+
+            // Remove inputs that are not in the updated list
+            foreach (var existingInput in existingSurvey.TblInputs)
+            {
+                if (!request.Inputs.Any(input => input.Id == existingInput.Id))
+                {
+                    _context.TblInputs.Remove(existingInput);
+                }
+            }
+
+            // Add new inputs or update existing ones
+            foreach (var updatedInput in request.Inputs)
+            {
+                var existingInput = existingSurvey.TblInputs.FirstOrDefault(c => c.Id == updatedInput.Id);
+                if (existingInput != null)
+                {
+                    // Update existing input
+                    existingInput.ControlId = updatedInput.ControlId;
+                    existingInput.OrderNo = updatedInput.OrderNo;
+                }
+                else
+                {
+                    // Add new input
+                    existingSurvey.TblInputs.Add(new TblInput
+                    {
+                        ControlId = updatedInput.ControlId,
+                        OrderNo = updatedInput.OrderNo,
+                    });
+                }
+            }            
 
             await _context.SaveChangesAsync();
 

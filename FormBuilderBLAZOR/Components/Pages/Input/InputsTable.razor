@@ -1,0 +1,17 @@
+﻿<table class="table table-bordered table-responsive">
+    <thead>
+        <tr class="btn-primary">
+            <th>Order no</th>
+            <th>Control Id</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var input in Inputs)
+        {
+            <DynamicInputRow Input="input" ControlsList="ControlsList" OnRemove="RemoveInput" />
+        }
+    </tbody>
+</table>
+
+<input type="button" class="btn btn-link" @onclick="AddNewInput">Add input</input>

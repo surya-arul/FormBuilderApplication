@@ -1,0 +1,47 @@
+﻿@page "/Controls"
+@rendermode InteractiveServer
+
+<h3>Controls</h3>
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <button @onclick="NavigateToCreateControl" class="btn btn-warning">Create control</button>
+        </div>
+    </div>
+
+    <table border="1" class="table table-bordered table-responsive">
+        <thead>
+            <tr class="btn-primary">
+                <th>
+                    Internal name
+                </th>
+                <th>
+                    Input type
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (_getAllControlsResponse is not null)
+            {
+                @foreach (var item in _getAllControlsResponse.Controls)
+                {
+                    <tr>
+                        <td>
+                            @item.InternalName
+                        </td>
+                        <td>
+                            @item.InputType
+                        </td>
+                        <td>
+                            <button @onclick="@(() => EditControl(item.Id))" class="btn btn-warning">Edit</button>
+                            <button @onclick="@(() => DeleteControl(item.Id))" class="btn btn-warning">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

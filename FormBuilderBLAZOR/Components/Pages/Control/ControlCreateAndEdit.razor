@@ -1,0 +1,88 @@
+﻿@using FormBuilderSharedService.Utilities
+
+<div class="form-group mb-4">
+    <label for="InternalName" class="control-label col-md-2">Internal Name</label>
+    <InputText for="InternalName" class="form-control" @bind-Value="@Control.InternalName" />
+    <ValidationMessage For="@(() => Control.InternalName)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="InputType" class="control-label col-md-2">Input Type</label>
+    <InputSelect @bind-Value="Control.InputType" class="form-control">
+        @foreach (var option in HtmlHelper.HtmlTypeDropdownList)
+        {
+            <option value="@option.Key">@option.Value</option>
+        }
+    </InputSelect>
+    <ValidationMessage For="@(() => Control.InputType)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="DivClassName" class="control-label col-md-2">Div class name</label>
+    <InputText for="DivClassName" class="form-control" @bind-Value="@Control.DivClassName" />
+    <ValidationMessage For="@(() => Control.DivClassName)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="InputClassName" class="control-label col-md-2">Input class name</label>
+    <InputText for="InputClassName" class="form-control" @bind-Value="@Control.InputClassName" />
+    <ValidationMessage For="@(() => Control.InputClassName)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="Label" class="control-label col-md-2">Label</label>
+    <InputText for="Label" class="form-control" @bind-Value="@Control.Label" />
+    <ValidationMessage For="@(() => Control.Label)" />
+</div>
+<div class="form-group mb-4">
+    <InputCheckbox for="ShouldHideLabel" class="form-check-input" @bind-Value="@Control.ShouldHideLabel" />
+    <label for="ShouldHideLabel" class="control-label col-md-2">Hide Label</label>
+    <ValidationMessage For="@(() => Control.ShouldHideLabel)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="LabelClassName" class="control-label col-md-2">Label class name</label>
+    <InputText for="LabelClassName" class="form-control" @bind-Value="@Control.LabelClassName" />
+    <ValidationMessage For="@(() => Control.LabelClassName)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="Value" class="control-label col-md-2">Value</label>
+    <InputText for="Value" class="form-control" @bind-Value="@Control.Value" />
+    <ValidationMessage For="@(() => Control.Value)" />
+</div>
+
+<div class="form-group mb-4">
+    <InputCheckbox for="IsAutofocus" class="form-check-input" @bind-Value="@Control.IsAutofocus" />
+    <label for="IsAutofocus" class="control-label col-md-2">Autofocus</label>
+    <ValidationMessage For="@(() => Control.IsAutofocus)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="Placeholder" class="control-label col-md-2">Placeholder</label>
+    <InputText for="Placeholder" class="form-control" @bind-Value="@Control.Placeholder" />
+    <ValidationMessage For="@(() => Control.Placeholder)" />
+</div>
+
+<div class="form-group mb-4">
+    <InputCheckbox for="IsRequired" class="form-check-input" @bind-Value="@Control.IsRequired" />
+    <label for="IsRequired" class="control-label col-md-2">Required</label>
+    <ValidationMessage For="@(() => Control.IsRequired)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="OptionData" class="control-label">Option Data</label>
+
+    @if (Control.OptionData != null)
+    {
+        @foreach (var option in Control.OptionData)
+        {
+            <div class="form-group mb-4">
+                <DynamicOptionField OptionData="@option" OnRemove="RemoveOption"></DynamicOptionField>
+            </div>
+        }   
+    }
+
+
+    <input type="button" class="btn btn-link" @onclick="AddNewOption" value="Add option" />
+</div>

@@ -1,0 +1,33 @@
+﻿@using FormBuilderDTO.DTOs.Base
+
+<div class="form-group mb-4">
+    <label for="Title" class="control-label col-md-2">Title</label>
+    <InputText for="Title" class="form-control" @bind-Value="@Survey.Title" />
+    <ValidationMessage For="@(() => Survey.Title)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="OpenDate" class="control-label col-md-2">Open Date</label>
+    <InputDate for="OpenDate" class="form-control" @bind-Value="@Survey.OpenDate" />
+    <span asp-validation-for="OpenDate" class="text-danger"></span>
+    <ValidationMessage For="@(() => Survey.OpenDate)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="EndDate" class="control-label col-md-2">End Date</label>
+    <InputDate for="EndDate" class="form-control" @bind-Value="@Survey.EndDate" />
+    <ValidationMessage For="@(() => Survey.EndDate)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="FormMethod" class="control-label col-md-2">Form Method</label>
+    <InputText for="FormMethod" class="form-control" @bind-Value="@Survey.FormMethod" />
+    <span validation-for="FormMethod" class="text-danger"></span>
+    <ValidationMessage For="@(() => Survey.FormMethod)" />
+</div>
+
+<div class="form-group mb-4">
+    <label for="FormAction" class="control-label col-md-2">Form Action</label>
+    <InputText for="FormAction" class="form-control" @bind-Value="@Survey.FormAction" />
+    <ValidationMessage For="@(() => Survey.FormAction)" />
+</div>

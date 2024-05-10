@@ -1,0 +1,54 @@
+﻿@page "/Surveys"
+@rendermode InteractiveServer
+
+<h3>Surveys</h3>
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <button @onclick="NavigateToCreateSurvey" class="btn btn-warning">Create survey</button>
+        </div>
+    </div>
+
+    <table border="1" class="table table-bordered table-responsive">
+        <thead>
+            <tr class="btn-primary">
+                <th>
+                    Title
+                </th>
+                <th>
+                    Open Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (_getAllSurveysResponse is not null)
+            {
+                @foreach (var item in _getAllSurveysResponse.Surveys)
+                {
+                    <tr>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @item.OpenDate
+                        </td>
+                        <td>
+                            @item.EndDate
+                        </td>
+                        <td>
+                            <button @onclick="@(() => EditSurvey(item.Id))" class="btn btn-warning">Edit</button>
+                            <button @onclick="@(() => DeleteSurvey(item.Id))" class="btn btn-warning">Delete</button>
+                            <button @onclick="@(() => PreviewSurvey(item.Id))" class="btn btn-warning">Preview</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

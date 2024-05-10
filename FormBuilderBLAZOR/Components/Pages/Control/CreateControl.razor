@@ -1,0 +1,17 @@
+﻿@page "/CreateControl"
+@using FormBuilderBLAZOR.Components.Pages.Input
+@rendermode InteractiveServer
+
+<h3>Create Control</h3>
+
+<EditForm Model="@_createControlRequest" OnValidSubmit="@SubmitControl">
+    <ObjectGraphDataAnnotationsValidator />
+    <ValidationSummary/>
+
+    <ControlCreateAndEdit Control="_createControlRequest.Control" AddOption="@AddOption" RemoveOption="@RemoveOption"></ControlCreateAndEdit>
+
+    <div class="form-group mb-4">
+        <button type="submit" class="btn btn-primary">Create control</button>
+    </div>
+
+</EditForm>

@@ -1,0 +1,15 @@
+﻿@page "/SurveyOutput/{Id:int}"
+
+<h3>SurveyOutput</h3>
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <p>@((MarkupString)HtmlTags)</p>
+
+
+    <h5>Html tags</h5>
+    <hr />
+    <div>
+        <p style="white-space: pre-wrap;">@HtmlTags</p>
+    </div>
+</div>

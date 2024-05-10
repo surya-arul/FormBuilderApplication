@@ -1,0 +1,18 @@
+﻿<tr>
+    <td>
+        <InputNumber @bind-Value="Input.OrderNo" class="form-control" />
+        <ValidationMessage For="@(() => Input.OrderNo)" />
+    </td>
+    <td>
+        <InputSelect @bind-Value="Input.ControlId" class="form-control">
+            @foreach (var option in ControlsList)
+            {
+                <option value="@option.Key">@option.Value</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => Input.ControlId)" />
+    </td>
+    <td>
+        <input type="button" class="btn btn-link" @onclick="RemoveInput">Remove input</input>
+    </td>
+</tr>

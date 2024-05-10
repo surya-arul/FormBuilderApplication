@@ -1,0 +1,19 @@
+﻿@page "/EditSurvey/{Id:int}"
+@using FormBuilderBLAZOR.Components.Pages.Input
+@rendermode InteractiveServer
+
+
+<h3>Edit Survey</h3>
+
+<EditForm Model="@_updateSurveyRequest" OnValidSubmit="@UpdateSurvey">
+    <ObjectGraphDataAnnotationsValidator />
+
+    <SurveyCreateAndEdit Survey="@_updateSurveyRequest.Survey"></SurveyCreateAndEdit>
+
+    <InputsTable Inputs="@_updateSurveyRequest.Inputs" ControlsList="@ControlsList" AddInput="@AddInput" RemoveInput="@RemoveInput"></InputsTable>
+
+    <div class="form-group mb-4">
+        <button type="submit" class="btn btn-primary">Update survey</button>
+    </div>
+
+</EditForm>

@@ -4,7 +4,7 @@
 
 <h3>Create Control</h3>
 
-<EditForm Model="@CreateControlRequest" OnValidSubmit="@SubmitControl">
+<EditForm Model="@CreateControlRequest" OnValidSubmit="@AddControl">
     <ObjectGraphDataAnnotationsValidator />
 
     <ControlCreateAndEdit Control="CreateControlRequest.Control" AddOption="@AddOption" RemoveOption="@RemoveOption"></ControlCreateAndEdit>

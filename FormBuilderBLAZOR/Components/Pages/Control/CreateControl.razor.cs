@@ -21,7 +21,7 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
         [Inject]
         private NavigationManager NavigationManager { get; set; } = default!;
 
-        private async Task SubmitControl()
+        private async Task AddControl()
         {
             await ControlRepository.CreateControl(CreateControlRequest);
             NavigationManager.NavigateTo("/Controls");

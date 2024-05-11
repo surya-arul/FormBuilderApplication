@@ -7,7 +7,7 @@ namespace FormBuilderBLAZOR.Components.Pages.Survey
 {
     public partial class CreateSurvey : ComponentBase
     {
-        private CreateSurveyRequest _createSurveyRequest = new();
+        private CreateSurveyRequest CreateSurveyRequest = new();
 
         [Inject]
         private IControlRepository ControlRepository { get; set; } = default!;
@@ -27,18 +27,18 @@ namespace FormBuilderBLAZOR.Components.Pages.Survey
 
         private void AddInput()
         {
-            _createSurveyRequest.Inputs.Add(new InputsDto());
+            CreateSurveyRequest.Inputs.Add(new InputsDto());
         }
 
         private async Task AddSurvey()
         {
-            await SurveyRepository.CreateSurvey(_createSurveyRequest);
+            await SurveyRepository.CreateSurvey(CreateSurveyRequest);
             NavigationManager.NavigateTo("/Surveys");
         }
 
         private async Task RemoveInput(InputsDto input)
         {
-            _createSurveyRequest.Inputs.Remove(input);
+            CreateSurveyRequest.Inputs.Remove(input);
             await InvokeAsync(StateHasChanged);
         }
     }

@@ -7,7 +7,7 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
 {
     public partial class CreateControl : ComponentBase
     {
-        private CreateControlRequest _createControlRequest { get; set; } = new CreateControlRequest
+        private CreateControlRequest CreateControlRequest { get; set; } = new CreateControlRequest
         {
             Control = new ControlsDto
             {
@@ -23,18 +23,18 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
 
         private async Task SubmitControl()
         {
-            await ControlRepository.CreateControl(_createControlRequest);
+            await ControlRepository.CreateControl(CreateControlRequest);
             NavigationManager.NavigateTo("/Surveys");
         }
 
         private void AddOption()
         {
-            _createControlRequest.Control.OptionData?.Add(string.Empty);
+            CreateControlRequest.Control.OptionData?.Add(string.Empty);
         }
 
         private async Task RemoveOption(string option)
         {
-            _createControlRequest.Control.OptionData?.Remove(option);
+            CreateControlRequest.Control.OptionData?.Remove(option);
             await InvokeAsync(StateHasChanged);
         }
     }

@@ -4,13 +4,13 @@
 
 <h3>Create Survey</h3>
 
-<EditForm Model="@_createSurveyRequest" OnValidSubmit="@AddSurvey">
+<EditForm Model="@CreateSurveyRequest" OnValidSubmit="@AddSurvey">
     <ObjectGraphDataAnnotationsValidator />
     <ValidationSummary/>
 
-    <SurveyCreateAndEdit Survey="@_createSurveyRequest.Survey"></SurveyCreateAndEdit>
+    <SurveyCreateAndEdit Survey="@CreateSurveyRequest.Survey"></SurveyCreateAndEdit>
 
-    <InputsTable Inputs="@_createSurveyRequest.Inputs" ControlsList="@ControlsList" AddInput="@AddInput" RemoveInput="@RemoveInput"></InputsTable>
+    <InputsTable Inputs="@CreateSurveyRequest.Inputs" ControlsList="@ControlsList" AddInput="@AddInput" RemoveInput="@RemoveInput"></InputsTable>
 
     <div class="form-group mb-4">
         <button type="submit" class="btn btn-primary">Create survey</button>

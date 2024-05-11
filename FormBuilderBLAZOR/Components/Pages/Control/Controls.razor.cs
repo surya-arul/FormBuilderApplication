@@ -31,7 +31,7 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
 
         private void EditControl(int id)
         {
-            NavigationManager.NavigateTo($"/CreateControl/{id}");
+            NavigationManager.NavigateTo($"/EditControl/{id}");
         }
 
         private async Task DeleteControl(int id)

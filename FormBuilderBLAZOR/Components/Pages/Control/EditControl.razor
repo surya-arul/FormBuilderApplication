@@ -1,0 +1,17 @@
+﻿@page "/EditControl/{Id:int}"
+@rendermode InteractiveServer
+
+<h3>Edit Control</h3>
+
+<EditForm Model="@UpdateControlRequest" OnValidSubmit="@UpdateControl">
+    <ObjectGraphDataAnnotationsValidator />
+
+    <ControlCreateAndEdit Control="UpdateControlRequest.Control" AddOption="@AddOption" RemoveOption="@RemoveOption"></ControlCreateAndEdit>
+
+    <ValidationSummary />
+
+    <div class="form-group mb-4">
+        <button type="submit" class="btn btn-primary">Update control</button>
+    </div>
+
+</EditForm>

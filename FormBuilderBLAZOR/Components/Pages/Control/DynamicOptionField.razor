@@ -1,4 +1,4 @@
-﻿@if (Control.OptionData != null)
+﻿@if (Control.OptionData is not null && Control.OptionData.Count > 0)
 {
     <div class="form-group mb-4">
         <InputText class="form-control" @bind-Value="Control.OptionData[Index]" />

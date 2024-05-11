@@ -24,7 +24,7 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
         private async Task SubmitControl()
         {
             await ControlRepository.CreateControl(CreateControlRequest);
-            NavigationManager.NavigateTo("/Surveys");
+            NavigationManager.NavigateTo("/Controls");
         }
 
         private void AddOption()

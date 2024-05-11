@@ -8,8 +8,6 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
         [Parameter]
         public ControlsDto Control { get; set; } = new();
 
-/*        public List<string> Control { get; set; } = new();*/
-
         [Parameter]
         public EventCallback<string> AddOption { get; set; }
 

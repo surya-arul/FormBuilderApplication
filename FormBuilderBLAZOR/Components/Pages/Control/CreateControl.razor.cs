@@ -1,4 +1,5 @@
-﻿using FormBuilderDTO.DTOs.Control;
+﻿using FormBuilderDTO.DTOs.Base;
+using FormBuilderDTO.DTOs.Control;
 using FormBuilderSharedService.Repositories;
 using Microsoft.AspNetCore.Components;
 
@@ -6,12 +7,13 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
 {
     public partial class CreateControl : ComponentBase
     {
-        private CreateControlRequest _createControlRequest { get; set; } = new();
-
-        protected async override Task OnInitializedAsync()
+        private CreateControlRequest _createControlRequest { get; set; } = new CreateControlRequest
         {
-            _createControlRequest.Control.OptionData = ["one","two"];
-        }
+            Control = new ControlsDto
+            {
+                OptionData = []
+            }
+        };
 
         [Inject]
         private IControlRepository ControlRepository { get; set; } = default!;
@@ -27,13 +29,12 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
 
         private void AddOption()
         {
-            _createControlRequest.Control.OptionData?.Add("");
-
+            _createControlRequest.Control.OptionData?.Add(string.Empty);
         }
 
-        private async Task RemoveOption(string options)
+        private async Task RemoveOption(string option)
         {
-            _createControlRequest.Control.OptionData?.Remove(options);
+            _createControlRequest.Control.OptionData?.Remove(option);
             await InvokeAsync(StateHasChanged);
         }
     }

@@ -72,17 +72,18 @@
 
 <div class="form-group mb-4">
     <label for="OptionData" class="control-label">Option Data</label>
+    <ValidationMessage For="@(() => Control.OptionData)" />
 
     @if (Control.OptionData != null)
     {
-        @foreach (var option in Control.OptionData)
+        @for (int i = 0; i < Control.OptionData.Count; i++)
         {
+            int index = i;
             <div class="form-group mb-4">
-                <DynamicOptionField OptionData="@option" OnRemove="RemoveOption"></DynamicOptionField>
+                <DynamicOptionField Control="@Control" Index=index Name="Control.OptionData" OnRemove="RemoveOption"></DynamicOptionField>
             </div>
-        }   
+        }
     }
-
 
     <input type="button" class="btn btn-link" @onclick="AddNewOption" value="Add option" />
 </div>

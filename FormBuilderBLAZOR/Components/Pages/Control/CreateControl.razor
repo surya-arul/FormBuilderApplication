@@ -6,9 +6,10 @@
 
 <EditForm Model="@_createControlRequest" OnValidSubmit="@SubmitControl">
     <ObjectGraphDataAnnotationsValidator />
-    <ValidationSummary/>
 
     <ControlCreateAndEdit Control="_createControlRequest.Control" AddOption="@AddOption" RemoveOption="@RemoveOption"></ControlCreateAndEdit>
+
+    <ValidationSummary />
 
     <div class="form-group mb-4">
         <button type="submit" class="btn btn-primary">Create control</button>

@@ -1,23 +1,7 @@
-﻿@using FormBuilderDTO.DTOs.Base
-
-@if (OptionData != null)
+﻿@if (Control.OptionData != null)
 {
     <div class="form-group mb-4">
-        <InputText class="form-control" @bind-Value="OptionData" />
+        <InputText class="form-control" @bind-Value="Control.OptionData[Index]" />
         <input type="button" @onclick="() => RemoveOption()" class="btn btn-link" value="Remove" />
     </div>
-}
-
-@code
-{
-    [Parameter]
-    public string OptionData { get; set; } = string.Empty;
-
-    [Parameter]
-    public EventCallback<string> OnRemove { get; set; }
-
-    private async Task RemoveOption()
-    {
-        await OnRemove.InvokeAsync(OptionData);
-    }
 }

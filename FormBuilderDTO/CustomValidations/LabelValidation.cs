@@ -36,6 +36,14 @@ namespace FormBuilderDTO.CustomValidations
                         validationResults.Add(new ValidationResult(errorMessage));
                     }
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(controlsDto.Label))
+                    {
+                        var errorMessage = $"Label is required for this input type.";
+                        validationResults.Add(new ValidationResult(errorMessage));
+                    }
+                }
             }
             else
             {

@@ -74,12 +74,6 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("tblSurveys");
 
-            entity.Property(e => e.FormAction)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.FormMethod)
-                .HasMaxLength(100)
-                .IsUnicode(false);
             entity.Property(e => e.Title)
                 .HasMaxLength(100)
                 .IsUnicode(false);

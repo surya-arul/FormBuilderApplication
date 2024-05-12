@@ -59,8 +59,6 @@ namespace FormBuilderSharedService.Repositories
                         Title = survey.Title,
                         OpenDate = survey.OpenDate,
                         EndDate = survey.EndDate,
-                        FormMethod = survey.FormMethod,
-                        FormAction = survey.FormAction,
                     },
                     Inputs = survey.TblInputs.Select(input => new GetInputWithControl
                     {
@@ -113,8 +111,6 @@ namespace FormBuilderSharedService.Repositories
                 Title = request.Survey.Title,
                 OpenDate = request.Survey.OpenDate,
                 EndDate = request.Survey.EndDate,
-                FormMethod = request.Survey.FormMethod,
-                FormAction = request.Survey.FormAction,
                 TblInputs = request.Inputs.Select(input => new TblInput
                 {
                     ControlId = input.ControlId,
@@ -147,8 +143,6 @@ namespace FormBuilderSharedService.Repositories
             existingSurvey.Title = request.Survey.Title;
             existingSurvey.OpenDate = request.Survey.OpenDate;
             existingSurvey.EndDate = request.Survey.EndDate;
-            existingSurvey.FormMethod = request.Survey.FormMethod;
-            existingSurvey.FormAction = request.Survey.FormAction;
 
             // Remove inputs that are not in the updated list
             foreach (var existingInput in existingSurvey.TblInputs)

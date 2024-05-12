@@ -171,6 +171,7 @@ namespace FormBuilderSharedService.Repositories
                         ControlId = updatedInput.ControlId,
                         OrderNo = updatedInput.OrderNo,
                     });
+                    await _context.SaveChangesAsync();
                 }
             }            
 

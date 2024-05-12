@@ -27,7 +27,7 @@ namespace FormBuilderMVC.Controllers
                     return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to generate survey or current date is not lies between open/end date." });
                 }
 
-                string allHtml = HtmlHelper.GenerateForm(response.Inputs, response.Survey);
+                string allHtml = HtmlHelper.MergeHtmlTags(response.Inputs);
 
                 ViewBag.InputTag = allHtml;
 
@@ -49,7 +49,38 @@ namespace FormBuilderMVC.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = ex.Message });
             }
-        } 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Submit()
+        {
+            try
+            {
+                Dictionary<string, string> formValues = [];
+
+                foreach (var key in Request.Form.Keys)
+                {
+                    formValues[key] = Request.Form[key];
+                }
+
+                foreach (var file in Request.Form.Files)
+                {
+                    using var memoryStream = new MemoryStream();
+                    file.CopyTo(memoryStream);
+
+                    string base64String = Convert.ToBase64String(memoryStream.ToArray());
+                    formValues[file.Name] = base64String;
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = ex.Message });
+            }
+        }
+
 
         #endregion
     }

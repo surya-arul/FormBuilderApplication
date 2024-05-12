@@ -1,4 +1,6 @@
-﻿@{
+﻿@using FormBuilderMVC.Controllers
+@using FormBuilderSharedService.Utilities
+@{
     ViewData["Title"] = "Survey Output";
 }
 
@@ -6,7 +8,9 @@
 <hr />
 
 <div class="container body-content border p-3 mt-4 mb-4">
-    <p>@Html.Raw(ViewBag.InputTag)</p>
+    <form asp-action="@nameof(FormBuilderController.Submit)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" method="post" enctype="multipart/form-data">
+        <p>@Html.Raw(ViewBag.InputTag)</p>
+    </form>
 </div>
 
 <div class="container body-content border p-3 mt-4 mb-4">

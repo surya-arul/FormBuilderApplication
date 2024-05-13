@@ -18,6 +18,10 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<TblSurvey> TblSurveys { get; set; }
 
+    public virtual DbSet<TblUserDatum> TblUserData { get; set; }
+
+    public virtual DbSet<TblUserSubmitDetail> TblUserSubmitDetails { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblControl>(entity =>
@@ -77,6 +81,36 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TblUserDatum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_tblUserData_Id");
+
+            entity.ToTable("tblUserData");
+
+            entity.Property(e => e.Label).IsUnicode(false);
+            entity.Property(e => e.Value).IsUnicode(false);
+
+            entity.HasOne(d => d.UserSubmitDetails).WithMany(p => p.TblUserData)
+                .HasForeignKey(d => d.UserSubmitDetailsId)
+                .HasConstraintName("FK_tblUserData_UserSubmitDetailsId");
+        });
+
+        modelBuilder.Entity<TblUserSubmitDetail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_tblUserSubmitDetails_Id");
+
+            entity.ToTable("tblUserSubmitDetails");
+
+            entity.Property(e => e.DateCreatedBy).HasColumnType("datetime");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Survey).WithMany(p => p.TblUserSubmitDetails)
+                .HasForeignKey(d => d.SurveyId)
+                .HasConstraintName("FK_tblUserSubmitDetails_SurveyId");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,4 +1,6 @@
-﻿using FormBuilderDTO.DTOs.Survey;
+﻿using FormBuilderDTO.DTOs.Base;
+using FormBuilderDTO.DTOs.Survey;
+using FormBuilderDTO.DTOs.UserSubmitDetails;
 using FormBuilderSharedService.Models;
 using FormBuilderSharedService.Repositories;
 using FormBuilderSharedService.Utilities;
@@ -9,10 +11,12 @@ namespace FormBuilderMVC.Controllers
     public class FormBuilderController : Controller
     {
         private readonly ISurveyRepository _surveyRepository;
+        private readonly IUserSubmitDataRepository _userSubmitDataRepository;
 
-        public FormBuilderController(ISurveyRepository surveyRepository)
+        public FormBuilderController(ISurveyRepository surveyRepository, IUserSubmitDataRepository userSubmitDataRepository)
         {
             _surveyRepository = surveyRepository;
+            _userSubmitDataRepository = userSubmitDataRepository;
         }
 
         #region FormDesign
@@ -31,7 +35,7 @@ namespace FormBuilderMVC.Controllers
 
                 ViewBag.InputTag = allHtml;
 
-                return View(nameof(SurveyOutput));
+                return View(nameof(SurveyOutput), new SurveysDto { Id = response.Survey.Id });
             }
             catch (Exception ex)
             {
@@ -39,11 +43,11 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
-        public IActionResult SurveyOutput()
+        public IActionResult SurveyOutput(SurveysDto survey)
         {
             try
             {
-                return View();
+                return View(survey);
             }
             catch (Exception ex)
             {
@@ -53,15 +57,27 @@ namespace FormBuilderMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Submit()
+        public async Task<IActionResult> Submit(int surveyId)
         {
             try
             {
+                var excludeKeys = new HashSet<string>
+                {
+                    "__RequestVerificationToken"
+                };
+
                 Dictionary<string, string> formValues = [];
 
                 foreach (var key in Request.Form.Keys)
                 {
-                    formValues[key] = Request.Form[key];
+                    if (!excludeKeys.Contains(key))
+                    {
+                        var value = Request.Form[key].ToString();
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            formValues[key] = value;
+                        }
+                    }
                 }
 
                 foreach (var file in Request.Form.Files)
@@ -72,6 +88,23 @@ namespace FormBuilderMVC.Controllers
                     string base64String = Convert.ToBase64String(memoryStream.ToArray());
                     formValues[file.Name] = base64String;
                 }
+
+                var createUserSubmitDetailsRequest = new CreateUserSubmitDetailsRequest
+                {
+                    UserSubmitDetails = new()
+                    {
+                        SurveyId = surveyId,
+                        DateCreatedBy = DateTime.Now,
+                        UserId = "hello"
+                    },
+                    UserData = formValues.Select(data => new UserDataDtos
+                    {
+                        Label = data.Key,
+                        Value = data.Value
+                    }).ToList()
+                };
+
+                await _userSubmitDataRepository.CreateUserSubmitDetails(createUserSubmitDetailsRequest);
 
                 return View();
             }

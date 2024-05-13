@@ -42,3 +42,21 @@ CREATE TABLE tblControls (
 	IsRequired BIT NOT NULL,
 	OptionData VARCHAR(MAX) NULL
 );
+
+-- Creating table (tblUserSubmitDetails) 
+CREATE TABLE tblUserSubmitDetails (
+    Id INT IDENTITY(1,1) CONSTRAINT PK_tblUserSubmitDetails_Id PRIMARY KEY,
+	SurveyId INT NOT NULL,
+    UserId VARCHAR(100) NOT NULL,
+    DateCreatedBy DateTime NOT NULL,
+    CONSTRAINT FK_tblUserSubmitDetails_SurveyId FOREIGN KEY (SurveyId) REFERENCES tblSurveys(Id) ON DELETE CASCADE -- Foreign key with delete cascade
+);
+
+-- Creating table (tblUserSubmitDetails) 
+CREATE TABLE tblUserData (
+    Id INT IDENTITY(1,1) CONSTRAINT PK_tblUserData_Id PRIMARY KEY,
+	UserSubmitDetailsId INT NOT NULL,
+    Label VARCHAR(MAX) NOT NULL,
+    Value VARCHAR(MAX) NOT NULL,
+    CONSTRAINT FK_tblUserData_UserSubmitDetailsId FOREIGN KEY (UserSubmitDetailsId) REFERENCES tblUserSubmitDetails(Id) ON DELETE CASCADE -- Foreign key with delete cascade
+);

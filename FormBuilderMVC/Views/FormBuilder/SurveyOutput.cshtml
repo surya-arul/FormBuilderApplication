@@ -1,5 +1,8 @@
-﻿@using FormBuilderMVC.Controllers
+﻿@using FormBuilderDTO.DTOs.Base
+@using FormBuilderMVC.Controllers
 @using FormBuilderSharedService.Utilities
+@model SurveysDto
+
 @{
     ViewData["Title"] = "Survey Output";
 }
@@ -8,7 +11,7 @@
 <hr />
 
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="@nameof(FormBuilderController.Submit)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" method="post" enctype="multipart/form-data">
+    <form asp-action="@nameof(FormBuilderController.Submit)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-surveyId="@Model.Id" method="post" enctype="multipart/form-data">
         <p>@Html.Raw(ViewBag.InputTag)</p>
     </form>
 </div>

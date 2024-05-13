@@ -35,6 +35,8 @@ namespace FormBuilderBLAZOR
             builder.Services.AddTransient<ISurveyRepository, SurveyRepository>();
             builder.Services.AddTransient<IControlRepository, ControlRepository>();
 
+            builder.Services.AddHttpContextAccessor();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

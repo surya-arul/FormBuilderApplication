@@ -18,16 +18,3 @@
     <InputDate for="EndDate" class="form-control" @bind-Value="@Survey.EndDate" />
     <ValidationMessage For="@(() => Survey.EndDate)" />
 </div>
-
-<div class="form-group mb-4">
-    <label for="FormMethod" class="control-label col-md-2">Form Method</label>
-    <InputText for="FormMethod" class="form-control" @bind-Value="@Survey.FormMethod" />
-    <span validation-for="FormMethod" class="text-danger"></span>
-    <ValidationMessage For="@(() => Survey.FormMethod)" />
-</div>
-
-<div class="form-group mb-4">
-    <label for="FormAction" class="control-label col-md-2">Form Action</label>
-    <InputText for="FormAction" class="form-control" @bind-Value="@Survey.FormAction" />
-    <ValidationMessage For="@(() => Survey.FormAction)" />
-</div>

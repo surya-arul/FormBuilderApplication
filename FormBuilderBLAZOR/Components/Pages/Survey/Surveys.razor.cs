@@ -1,6 +1,5 @@
 ﻿using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.Repositories;
-using FormBuilderSharedService.Utilities;
 using Microsoft.AspNetCore.Components;
 
 namespace FormBuilderBLAZOR.Components.Pages.Survey
@@ -43,14 +42,9 @@ namespace FormBuilderBLAZOR.Components.Pages.Survey
             _getAllSurveysResponse = await GetAllSurveys();
         }
 
-        private async Task PreviewSurvey(int id)
+        private void PreviewSurvey(int id)
         {
             NavigationManager.NavigateTo($"/SurveyOutput/{id}");
-
-            var response = await SurveyRepository.GetSurveyById(new GetSurveyRequest { Id = id });
-
-            string allHtml = HtmlHelper.GenerateForm(response.Inputs, response.Survey);
-
         }
     }
 }

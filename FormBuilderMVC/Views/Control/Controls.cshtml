@@ -14,13 +14,13 @@
 
     <div class="row mb-3">
         <div class="col-md-2">
-            <a asp-action="@nameof(ControlController.CreateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" class="btn btn-warning">Create control</a>
+            <a class="btn btn-primary" asp-action="@nameof(ControlController.CreateControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))">Create control</a>
         </div>
     </div>
 
-    <table border="1" class="table table-bordered table-responsive">
-        <thead>
-            <tr class="btn-primary">
+    <table class="table table-hover table-striped-columns table-bordered table-responsive">
+        <thead class="table-dark text-center">
+            <tr>
                 <th>
                     Internal name
                 </th>
@@ -30,7 +30,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center">
             @if (Model.Controls is not null)
             {
                 @foreach (var item in Model.Controls)
@@ -43,8 +43,8 @@
                             @item.InputType
                         </td>
                         <td>
-                            <a asp-action="@nameof(ControlController.EditControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="@nameof(ControlController.DeleteControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" asp-route-id="@item.Id">Delete</a> |
+                            <a class="btn btn-warning btn-sm" asp-action="@nameof(ControlController.EditControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger btn-sm" asp-action="@nameof(ControlController.DeleteControl)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }

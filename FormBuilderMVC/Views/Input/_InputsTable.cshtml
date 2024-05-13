@@ -1,15 +1,21 @@
 ﻿@using FormBuilderDTO.DTOs.Base
 @model List<InputsDto>
 
-<table border="1" class="table table-bordered table-responsive" id="inputsTable">
-    <thead>
-        <tr class="btn-primary">
+<div class="row mb-3">
+    <div class="col-md-2">
+        <button id="addInput" type="button" class="btn btn-warning btn-sm">Add input</button>
+    </div>
+</div>
+
+<table class="table table-hover table-striped-columns table-bordered table-responsive" id="inputsTable">
+    <thead class="table-dark text-center">
+        <tr>
             <th>Order no</th>
             <th>Control Id</th>
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody id="inputRows">
+    <tbody id="inputRows" class="text-center">
         @for (int i = 0; i < Model.Count; i++)
         {
             <tr>
@@ -32,14 +38,12 @@
                     <span asp-validation-for="@Model[i].ControlId" class="text-danger"></span>
                 </td>
                 <td>
-                    <button class="removeInput btn btn-link" type="button">Remove input</button>
+                    <button class="btn btn-danger btn-sm" type="button">Remove input</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-<button id="addInput" type="button" class="btn btn-link">Add input</button>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -50,24 +54,24 @@
             var index = inputRows.children.length; // Get the number of existing input rows
             var newRow = document.createElement('tr');
             newRow.innerHTML = `
-                            <td>
-                            <input name="Inputs[${index}].OrderNo" class="form-control" type="number" value="0" />
-                            </td>
-                            <td>
-                            <select name="Inputs[${index}].ControlId" class="form-control">
-                            @if (ViewData["ControlsList"] is List<KeyValuePair<string, string>> controlsList)
-                            {
-                                foreach (var option in controlsList)
-                                {
-                                    <option value="@option.Key">@option.Value</option>
-                                }
-                            }
-                            </select>
-                            </td>
-                            <td>
-                            <button class="removeInput btn btn-link" type="button">Remove input</button>
-                            </td>
-                            `;
+                                <td>
+                                <input name="Inputs[${index}].OrderNo" class="form-control" type="number" value="0" />
+                                </td>
+                                <td>
+                                <select name="Inputs[${index}].ControlId" class="form-control">
+    @if (ViewData["ControlsList"] is List<KeyValuePair<string, string>> controlsList)
+    {
+        foreach (var option in controlsList)
+        {
+                                                <option value="@option.Key">@option.Value</option>
+        }
+    }
+                                </select>
+                                </td>
+                                <td>
+                                    <button class="removeInput btn btn-danger btn-sm" type="button">Remove input</button>
+                                </td>
+                                `;
             inputRows.appendChild(newRow);
         });
 

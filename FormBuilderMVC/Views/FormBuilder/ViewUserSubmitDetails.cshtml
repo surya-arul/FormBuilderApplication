@@ -1,0 +1,47 @@
+﻿@using FormBuilderDTO.DTOs.UserSubmitDetails
+@using FormBuilderMVC.Controllers
+@using FormBuilderSharedService.Utilities
+@model GetUserSubmitDetailsBasedOnSurveyResponse
+
+@{
+    ViewData["Title"] = "Submitted users list";
+}
+
+<h4>@Model.Survey.Title - Submitted users list</h4>
+<hr />
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <table class="table table-hover table-striped-columns table-bordered table-responsive">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>
+                    User id
+                </th>
+                <th>
+                    Date created by
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @if (Model.UserSubmitDetails is not null)
+            {
+                @foreach (var item in Model.UserSubmitDetails)
+                {
+                    <tr>
+                        <td>
+                            @item.UserId
+                        </td>
+                        <td>
+                            @item.DateCreatedBy
+                        </td>
+                        <td>
+                            <a class="btn btn-warning btn-sm" asp-action="@nameof(FormBuilderController.ViewDataSubmittedByUser)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-userSubmitDetailsId="@item.Id">View data</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

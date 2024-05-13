@@ -11,12 +11,14 @@ namespace FormBuilderMVC.Controllers
     public class FormBuilderController : Controller
     {
         private readonly ISurveyRepository _surveyRepository;
-        private readonly IUserSubmitDataRepository _userSubmitDataRepository;
+        private readonly IUserSubmitDetailsRepository _userSubmitDetailsRepository;
+        private readonly IUserDataRepository _userDataRepository;
 
-        public FormBuilderController(ISurveyRepository surveyRepository, IUserSubmitDataRepository userSubmitDataRepository)
+        public FormBuilderController(ISurveyRepository surveyRepository, IUserSubmitDetailsRepository userSubmitDetailsRepository, IUserDataRepository userDataRepository)
         {
             _surveyRepository = surveyRepository;
-            _userSubmitDataRepository = userSubmitDataRepository;
+            _userSubmitDetailsRepository = userSubmitDetailsRepository;
+            _userDataRepository = userDataRepository;
         }
 
         #region FormDesign
@@ -55,12 +57,20 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
+        #endregion
+
+        #region SubmitDynamicForm
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Submit(int surveyId)
+        public async Task<IActionResult> SubmitDynamicForm(int surveyId)
         {
             try
             {
+                // Used to store unique id of the user (This can be replaced when using Authentication by passing unique id of the user)
+                string userId = string.Empty;
+
+                // Excluding unwanted form values
                 var excludeKeys = new HashSet<string>
                 {
                     "__RequestVerificationToken"
@@ -75,7 +85,14 @@ namespace FormBuilderMVC.Controllers
                         var value = Request.Form[key].ToString();
                         if (!string.IsNullOrEmpty(value))
                         {
-                            formValues[key] = value;
+                            if (key == "userId")
+                            {
+                                userId = value;
+                            }
+                            else
+                            {
+                                formValues[key] = value;
+                            }
                         }
                     }
                 }
@@ -95,7 +112,7 @@ namespace FormBuilderMVC.Controllers
                     {
                         SurveyId = surveyId,
                         DateCreatedBy = DateTime.Now,
-                        UserId = "hello"
+                        UserId = userId
                     },
                     UserData = formValues.Select(data => new UserDataDtos
                     {
@@ -104,9 +121,9 @@ namespace FormBuilderMVC.Controllers
                     }).ToList()
                 };
 
-                await _userSubmitDataRepository.CreateUserSubmitDetails(createUserSubmitDetailsRequest);
+                await _userSubmitDetailsRepository.CreateUserSubmitDetails(createUserSubmitDetailsRequest);
 
-                return View();
+                return RedirectToAction(nameof(SurveyController.Surveys), StringHelper.ExtractControllerName(typeof(SurveyController)));
             }
             catch (Exception ex)
             {
@@ -116,5 +133,42 @@ namespace FormBuilderMVC.Controllers
 
 
         #endregion
+
+        #region Get user submit details based on survey id
+
+        public async Task<IActionResult> ViewUserSubmitDetails(GetUserSubmitDetailsBasedOnSurveyRequest request)
+        {
+            try
+            {
+                var response = await _userSubmitDetailsRepository.GetUserSubmitDetailsBasedOnSurvey(request);
+
+                return View(response);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = ex.Message });
+            }
+        }
+
+        #endregion
+
+        #region Get user data
+
+        public async Task<IActionResult> ViewDataSubmittedByUser(GetDataSubmittedByUserRequest request)
+        {
+            try
+            {
+                var response = await _userDataRepository.GetDataSubmittedByUserBasedOnUserSubmitDetails(request);
+
+                return View(response);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = ex.Message });
+            }
+        }
+
+        #endregion
+
     }
 }

@@ -20,6 +20,7 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
         private async Task RemoveOption()
         {
             await OnRemove.InvokeAsync(Control.OptionData?[Index]);
+            Index = 0;
         }
     }
 }

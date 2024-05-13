@@ -2,6 +2,6 @@
 {
     <div class="form-group mb-4">
         <InputText class="form-control" @bind-Value="Control.OptionData[Index]" />
-        <input type="button" @onclick="() => RemoveOption()" class="btn btn-link" value="Remove" />
     </div>
+    <input type="button" class="btn btn-danger btn-sm" @onclick="() => RemoveOption()" value="Remove" />
 }

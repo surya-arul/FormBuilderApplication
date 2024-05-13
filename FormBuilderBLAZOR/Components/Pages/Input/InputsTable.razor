@@ -1,17 +1,19 @@
-﻿<table class="table table-bordered table-responsive">
-    <thead>
+﻿<div class="form-group mb-4">
+    <input type="button" class="btn btn-warning btn-sm" @onclick="AddNewInput" value="Add input" />
+</div>
+
+<table class="table table-hover table-striped-columns table-bordered table-responsive">
+    <thead class="table-dark text-center">
         <tr class="btn-primary">
             <th>Order no</th>
             <th>Control Id</th>
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="text-center">
         @foreach (var input in Inputs)
         {
             <DynamicInputRow Input="input" ControlsList="ControlsList" OnRemove="RemoveInput" />
         }
     </tbody>
 </table>
-
-<input type="button" class="btn btn-link" @onclick="AddNewInput">Add input</input>

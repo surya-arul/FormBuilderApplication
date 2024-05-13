@@ -7,13 +7,13 @@
 
     <div class="row mb-3">
         <div class="col-md-2">
-            <button @onclick="NavigateToCreateControl" class="btn btn-warning">Create control</button>
+            <button @onclick="NavigateToCreateControl" class="btn btn-primary">Create control</button>
         </div>
     </div>
 
-    <table border="1" class="table table-bordered table-responsive">
-        <thead>
-            <tr class="btn-primary">
+    <table class="table table-hover table-striped-columns table-bordered table-responsive">
+        <thead class="table-dark text-center">
+            <tr>
                 <th>
                     Internal name
                 </th>
@@ -23,7 +23,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center">
             @if (_getAllControlsResponse is not null)
             {
                 @foreach (var item in _getAllControlsResponse.Controls)
@@ -36,8 +36,8 @@
                             @item.InputType
                         </td>
                         <td>
-                            <button @onclick="@(() => EditControl(item.Id))" class="btn btn-warning">Edit</button>
-                            <button @onclick="@(() => DeleteControl(item.Id))" class="btn btn-warning">Delete</button>
+                            <button class="btn btn-warning btn-sm" @onclick="@(() => EditControl(item.Id))">Edit</button>
+                            <button class="btn btn-danger btn-sm" @onclick="@(() => DeleteControl(item.Id))">Delete</button>
                         </td>
                     </tr>
                 }

@@ -7,13 +7,13 @@
 
     <div class="row mb-3">
         <div class="col-md-2">
-            <button @onclick="NavigateToCreateSurvey" class="btn btn-warning">Create survey</button>
+            <button class="btn btn-primary" @onclick="NavigateToCreateSurvey">Create survey</button>
         </div>
     </div>
 
-    <table border="1" class="table table-bordered table-responsive">
-        <thead>
-            <tr class="btn-primary">
+    <table class="table table-hover table-striped-columns table-bordered table-responsive">
+        <thead class="table-dark text-center">
+            <tr>
                 <th>
                     Title
                 </th>
@@ -26,7 +26,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center">
             @if (_getAllSurveysResponse is not null)
             {
                 @foreach (var item in _getAllSurveysResponse.Surveys)
@@ -42,9 +42,9 @@
                             @item.EndDate
                         </td>
                         <td>
-                            <button @onclick="@(() => EditSurvey(item.Id))" class="btn btn-warning">Edit</button>
-                            <button @onclick="@(() => DeleteSurvey(item.Id))" class="btn btn-warning">Delete</button>
-                            <button @onclick="@(() => PreviewSurvey(item.Id))" class="btn btn-warning">Preview</button>
+                            <button class="btn btn-warning btn-sm" @onclick="@(() => EditSurvey(item.Id))">Edit</button>
+                            <button class="btn btn-danger btn-sm" @onclick="@(() => DeleteSurvey(item.Id))">Delete</button>
+                            <button class="btn btn-info btn-sm" @onclick="@(() => PreviewSurvey(item.Id))">Preview</button>
                         </td>
                     </tr>
                 }

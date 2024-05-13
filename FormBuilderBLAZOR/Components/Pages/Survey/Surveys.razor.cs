@@ -1,4 +1,5 @@
-﻿using FormBuilderDTO.DTOs.Survey;
+﻿using FormBuilderBLAZOR.Components.Pages.FormBuilder;
+using FormBuilderDTO.DTOs.Survey;
 using FormBuilderSharedService.Repositories;
 using Microsoft.AspNetCore.Components;
 
@@ -26,12 +27,13 @@ namespace FormBuilderBLAZOR.Components.Pages.Survey
 
         private void NavigateToCreateSurvey()
         {
-            NavigationManager.NavigateTo("/CreateSurvey");
+            NavigationManager.NavigateTo($"/{nameof(CreateSurvey)}");
         }
 
         private void EditSurvey(int id)
         {
-            NavigationManager.NavigateTo($"/EditSurvey/{id}");
+            NavigationManager.NavigateTo($"/{nameof(EditSurvey)}/{id}");
+
         }
 
         private async Task DeleteSurvey(int id)
@@ -44,7 +46,12 @@ namespace FormBuilderBLAZOR.Components.Pages.Survey
 
         private void PreviewSurvey(int id)
         {
-            NavigationManager.NavigateTo($"/SurveyOutput/{id}");
+            NavigationManager.NavigateTo($"/{nameof(SurveyOutput)}/{id}");
+        }
+
+        private void ViewUserSubmitDetails(int id)
+        {
+            NavigationManager.NavigateTo($"/{nameof(UserSubmitDetailsList)}/{id}");
         }
     }
 }

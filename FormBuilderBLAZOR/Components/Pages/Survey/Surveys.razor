@@ -45,6 +45,7 @@
                             <button class="btn btn-warning btn-sm" @onclick="@(() => EditSurvey(item.Id))">Edit</button>
                             <button class="btn btn-danger btn-sm" @onclick="@(() => DeleteSurvey(item.Id))">Delete</button>
                             <button class="btn btn-info btn-sm" @onclick="@(() => PreviewSurvey(item.Id))">Preview</button>
+                            <button class="btn btn-success btn-sm" @onclick="@(() => ViewUserSubmitDetails(item.Id))">View user data</button>
                         </td>
                     </tr>
                 }

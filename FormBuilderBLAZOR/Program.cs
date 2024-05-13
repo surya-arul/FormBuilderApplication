@@ -34,6 +34,8 @@ namespace FormBuilderBLAZOR
 
             builder.Services.AddTransient<ISurveyRepository, SurveyRepository>();
             builder.Services.AddTransient<IControlRepository, ControlRepository>();
+            builder.Services.AddTransient<IUserSubmitDetailsRepository, UserSubmitDetailsRepository>();
+            builder.Services.AddTransient<IUserDataRepository, UserDataRepository>();
 
             builder.Services.AddHttpContextAccessor();
 

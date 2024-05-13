@@ -1,0 +1,41 @@
+﻿@page "/UserSubmitDetailsList/{Id:int}"
+@rendermode InteractiveServer
+
+<h4>@_getUserSubmitDetailsBasedOnSurveyResponse.Survey.Title - Submitted users list</h4>
+<hr />
+
+<div class="container body-content border p-3 mt-4 mb-4">
+
+    <table class="table table-hover table-striped-columns table-bordered table-responsive">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>
+                    User id
+                </th>
+                <th>
+                    Date created by
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @if (_getUserSubmitDetailsBasedOnSurveyResponse is not null)
+            {
+                @foreach (var item in _getUserSubmitDetailsBasedOnSurveyResponse.UserSubmitDetails)
+                {
+                    <tr>
+                        <td>
+                            @item.UserId
+                        </td>
+                        <td>
+                            @item.DateCreatedBy
+                        </td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" @onclick="@(() => ViewDataSubmittedByUser(item.Id))">View data</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

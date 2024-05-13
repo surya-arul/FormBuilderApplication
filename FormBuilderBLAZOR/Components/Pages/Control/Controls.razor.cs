@@ -26,12 +26,14 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
 
         private void NavigateToCreateControl()
         {
-            NavigationManager.NavigateTo("/CreateControl");
+            NavigationManager.NavigateTo($"/{nameof(CreateControl)}");
+
         }
 
         private void EditControl(int id)
         {
-            NavigationManager.NavigateTo($"/EditControl/{id}");
+            NavigationManager.NavigateTo($"/{nameof(FormBuilderBLAZOR.Components.Pages.Control.EditControl)}/{id}");
+
         }
 
         private async Task DeleteControl(int id)

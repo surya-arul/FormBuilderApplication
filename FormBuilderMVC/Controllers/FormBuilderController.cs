@@ -76,7 +76,7 @@ namespace FormBuilderMVC.Controllers
                     "__RequestVerificationToken"
                 };
 
-                Dictionary<string, string> formValues = [];
+                List<(string label, string value, byte[]? byteValue)> formValues = [];
 
                 foreach (var key in Request.Form.Keys)
                 {
@@ -91,7 +91,7 @@ namespace FormBuilderMVC.Controllers
                             }
                             else
                             {
-                                formValues[key] = value;
+                                formValues.Add((key, value, null));
                             }
                         }
                     }
@@ -102,8 +102,7 @@ namespace FormBuilderMVC.Controllers
                     using var memoryStream = new MemoryStream();
                     file.CopyTo(memoryStream);
 
-                    string base64String = Convert.ToBase64String(memoryStream.ToArray());
-                    formValues[file.Name] = base64String;
+                    formValues.Add((file.Name, file.FileName, memoryStream.ToArray()));
                 }
 
                 var createUserSubmitDetailsRequest = new CreateUserSubmitDetailsRequest
@@ -116,8 +115,9 @@ namespace FormBuilderMVC.Controllers
                     },
                     UserData = formValues.Select(data => new UserDataDtos
                     {
-                        Label = data.Key,
-                        Value = data.Value
+                        Label = data.label,
+                        Value = data.value,
+                        ByteValue = data.byteValue is not null ? data.byteValue : null
                     }).ToList()
                 };
 

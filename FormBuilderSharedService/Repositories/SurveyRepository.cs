@@ -11,7 +11,9 @@ namespace FormBuilderSharedService.Repositories
     public interface ISurveyRepository
     {
         Task<GetAllSurveysResponse> GetAllSurveys();
+        Task<GetPublishedSurveysResponse> GetPublishedSurveys();
         Task<GetSurveyResponse> GetSurveyById(GetSurveyRequest request);
+        Task<GetPublishedSurveyResponse> GetPublishedSurveyById(GetSurveyRequest request);
         Task<CreateSurveyResponse> CreateSurvey(CreateSurveyRequest request);
         Task<UpdateSurveyResponse> UpdateSurvey(UpdateSurveyRequest request);
         Task<DeleteSurveyResponse> DeleteSurvey(DeleteSurveyRequest request);
@@ -28,7 +30,6 @@ namespace FormBuilderSharedService.Repositories
         // Get all surveys
         public async Task<GetAllSurveysResponse> GetAllSurveys()
         {
-
             var surveys = await _context.TblSurveys
                 .Select(survey => new SurveysDto
                 {
@@ -41,6 +42,29 @@ namespace FormBuilderSharedService.Repositories
             var response = new GetAllSurveysResponse
             {
                 Surveys = surveys
+            };
+
+            return response;
+        }
+
+        // Get published surveys (filter using open date & end date)
+        public async Task<GetPublishedSurveysResponse> GetPublishedSurveys()
+        {
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Today);
+
+            var publishedSurveys = await _context.TblSurveys
+                .Where(survey => survey.OpenDate <= currentDate && survey.EndDate >= currentDate)
+                .Select(survey => new SurveysDto
+                {
+                    Id = survey.Id,
+                    Title = survey.Title,
+                    OpenDate = survey.OpenDate,
+                    EndDate = survey.EndDate
+                }).ToListAsync();
+
+            var response = new GetPublishedSurveysResponse
+            {
+                Surveys = publishedSurveys
             };
 
             return response;
@@ -89,6 +113,58 @@ namespace FormBuilderSharedService.Repositories
             {
                 Survey = surveyData?.Survey ?? new(),
                 Inputs = surveyData?.Inputs ?? []
+            };
+
+
+            return response;
+        }
+
+        // Get published survey, input with control name based on id (filter using open date & end date)
+        public async Task<GetPublishedSurveyResponse> GetPublishedSurveyById(GetSurveyRequest request)
+        {
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Today);
+
+            var publishedSurveyData = await _context.TblSurveys
+                .Where(survey => survey.OpenDate <= currentDate && survey.EndDate >= currentDate)
+                .Where(survey => survey.Id == request.Id)
+                .Select(survey => new
+                {
+                    Survey = new SurveysDto
+                    {
+                        Id = survey.Id,
+                        Title = survey.Title,
+                        OpenDate = survey.OpenDate,
+                        EndDate = survey.EndDate,
+                    },
+                    Inputs = survey.TblInputs.Select(input => new GetInputWithControl
+                    {
+                        Id = input.Id,
+                        SurveyId = input.SurveyId,
+                        OrderNo = input.OrderNo,
+                        ControlId = input.ControlId,
+                        Control = new ControlsDto
+                        {
+                            Id = input.Control.Id,
+                            InternalName = input.Control.InternalName,
+                            InputType = input.Control.InputType,
+                            DivClassName = input.Control.DivClassName,
+                            InputClassName = input.Control.InputClassName,
+                            Label = input.Control.Label,
+                            ShouldHideLabel = input.Control.ShouldHideLabel,
+                            LabelClassName = input.Control.LabelClassName,
+                            Value = input.Control.Value,
+                            IsAutofocus = input.Control.IsAutofocus,
+                            Placeholder = input.Control.Placeholder,
+                            IsRequired = input.Control.IsRequired,
+                            OptionData = !string.IsNullOrEmpty(input.Control.OptionData) ? StringHelper.StringToList(input.Control.OptionData, null) : new List<string>()
+                        }
+                    }).OrderBy(x => x.OrderNo).ToList()
+                }).FirstOrDefaultAsync();
+
+            var response = new GetPublishedSurveyResponse
+            {
+                Survey = publishedSurveyData?.Survey ?? new(),
+                Inputs = publishedSurveyData?.Inputs ?? []
             };
 
 

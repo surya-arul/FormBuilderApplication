@@ -24,13 +24,13 @@ namespace FormBuilderBLAZOR.Components.Pages.FormBuilder
 
         private string HtmlTags { get; set; } = string.Empty;
 
-        private GetSurveyResponse _getSurveyResponse = new();
+        private GetPublishedSurveyResponse _getPublishedSurveyResponse = new();
 
         protected async override Task OnInitializedAsync()
         {
-            _getSurveyResponse = await SurveyRepository.GetSurveyById(new GetSurveyRequest { Id = Id });
+            _getPublishedSurveyResponse = await SurveyRepository.GetPublishedSurveyById(new GetSurveyRequest { Id = Id });
 
-            HtmlTags = HtmlHelper.MergeHtmlTags(_getSurveyResponse.Inputs);
+            HtmlTags = HtmlHelper.MergeHtmlTags(_getPublishedSurveyResponse.Inputs);
         }
 
         public async Task SubmitForm()
@@ -81,7 +81,7 @@ namespace FormBuilderBLAZOR.Components.Pages.FormBuilder
                 {
                     UserSubmitDetails = new()
                     {
-                        SurveyId = _getSurveyResponse.Survey.Id,
+                        SurveyId = _getPublishedSurveyResponse.Survey.Id,
                         DateCreatedBy = DateTime.Now,
                         UserId = userId
                     },

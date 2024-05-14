@@ -44,11 +44,6 @@ namespace FormBuilderBLAZOR.Components.Pages.Survey
             _getAllSurveysResponse = await GetAllSurveys();
         }
 
-        private void PreviewSurvey(int id)
-        {
-            NavigationManager.NavigateTo($"/{nameof(SurveyOutput)}/{id}");
-        }
-
         private void ViewUserSubmitDetails(int id)
         {
             NavigationManager.NavigateTo($"/{nameof(UserSubmitDetailsList)}/{id}");

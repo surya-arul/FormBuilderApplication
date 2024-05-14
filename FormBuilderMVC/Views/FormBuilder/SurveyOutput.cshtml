@@ -11,16 +11,26 @@
 <hr />
 
 <div class="container body-content border p-3 mt-4 mb-4">
-    <form asp-action="@nameof(FormBuilderController.SubmitDynamicForm)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-surveyId="@Model.Id" method="post" enctype="multipart/form-data">
-        
-        @* This userId field is used to get unique id to store in form submission. (This can be replaced by using Authentication by passing user id) *@
-        <div class="form-group mb-4">
-            <label class="control-label col-md-2">User Id/Email</label>
-            <input type="text" id="userId" class="form-control" name="userId" required />
-        </div>
 
-        @Html.Raw(ViewBag.InputTag)
-    </form>
+    @if (string.IsNullOrEmpty(ViewBag.InputTag))
+    {
+        <p>There is no survey to display</p>
+    }
+    else
+    {
+        <form asp-action="@nameof(FormBuilderController.SubmitDynamicForm)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-surveyId="@Model.Id" method="post" enctype="multipart/form-data">
+
+            @* This userId field is used to get unique id to store in form submission. (This can be replaced by using Authentication by passing user id) *@
+            <div class="form-group mb-4">
+                <label class="control-label col-md-2">User Id/Email</label>
+                <input type="text" id="userId" class="form-control" name="userId" required />
+            </div>
+
+            @Html.Raw(ViewBag.InputTag)
+        </form>
+    }
+
+    
 </div>
 
 @* <div class="container body-content border p-3 mt-4 mb-4">

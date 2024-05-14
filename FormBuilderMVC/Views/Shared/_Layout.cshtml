@@ -27,10 +27,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-action="@nameof(HomeController.Index)" asp-controller="@StringHelper.ExtractControllerName(typeof(HomeController))">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-action="@nameof(SurveyController.Surveys)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))">Form Builder</a>
+                            <a class="nav-link text-dark" asp-area="" asp-action="@nameof(SurveyController.Surveys)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))">Surveys</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-action="@nameof(ControlController.Controls)" asp-controller="@StringHelper.ExtractControllerName(typeof(ControlController))">Controls</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-action="@nameof(SurveyController.PublishedSurveys)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))">Published Surveys</a>
                         </li>
                     </ul>
                 </div>

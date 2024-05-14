@@ -1,22 +1,15 @@
 ﻿@using FormBuilderDTO.DTOs.Survey
 @using FormBuilderMVC.Controllers
 @using FormBuilderSharedService.Utilities
-@model GetAllSurveysResponse
+@model GetPublishedSurveysResponse
 
 @{
-    ViewData["Title"] = "Surveys";
+    ViewData["Title"] = "Published surveys";
 }
 
-<h4>Survey List</h4>
-<hr />
+<h3>Published surveys</h3>
 
 <div class="container body-content border p-3 mt-4 mb-4">
-
-    <div class="row mb-3">
-        <div class="col-md-2">
-            <a class="btn btn-primary" asp-action="@nameof(SurveyController.CreateSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))">Create survey</a>
-        </div>
-    </div>
 
     <table class="table table-hover table-striped-columns table-bordered table-responsive">
         <thead class="table-dark text-center">
@@ -49,9 +42,7 @@
                             @item.EndDate
                         </td>
                         <td>
-                            <a class="btn btn-warning btn-sm" asp-action="@nameof(SurveyController.EditSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-danger btn-sm" asp-action="@nameof(SurveyController.DeleteSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(SurveyController))" asp-route-id="@item.Id">Delete</a>
-                            <a class="btn btn-success btn-sm" asp-action="@nameof(FormBuilderController.ViewUserSubmitDetails)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-surveyId="@item.Id">View user data</a>
+                            <a class="btn btn-info btn-sm" asp-action="@nameof(FormBuilderController.PreviewSurvey)" asp-controller="@StringHelper.ExtractControllerName(typeof(FormBuilderController))" asp-route-id="@item.Id">Preview</a>
                         </td>
                     </tr>
                 }

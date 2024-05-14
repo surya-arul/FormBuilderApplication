@@ -40,6 +40,19 @@ namespace FormBuilderMVC.Controllers
             }
         }
 
+        public async Task<IActionResult> PublishedSurveys()
+        {
+            try
+            {
+                var response = await _surveyRepository.GetPublishedSurveys();
+                return View(response);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = ex.Message });
+            }
+        }
+
         #endregion
 
         #region Create Survey

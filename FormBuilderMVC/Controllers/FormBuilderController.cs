@@ -26,12 +26,7 @@ namespace FormBuilderMVC.Controllers
         {
             try
             {
-                var response = await _surveyRepository.GetSurveyById(request);
-
-                if (response is null || response.Inputs.Count is 0)
-                {
-                    return RedirectToAction(nameof(HomeController.Error), StringHelper.ExtractControllerName(typeof(HomeController)), new ErrorViewModel { ErrorMessage = "No data to generate survey or current date is not lies between open/end date." });
-                }
+                var response = await _surveyRepository.GetPublishedSurveyById(request);
 
                 string allHtml = HtmlHelper.MergeHtmlTags(response.Inputs);
 

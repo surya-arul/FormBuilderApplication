@@ -16,16 +16,6 @@ CREATE TABLE tblSurveys (
     FormAction VARCHAR(100) NULL,
 );
 
--- Creating table (tblInputs) 
-CREATE TABLE tblInputs (
-    Id INT IDENTITY(1,1) CONSTRAINT PK_tblInputs_Id PRIMARY KEY,
-	SurveyId INT NOT NULL,
-    ControlId INT NOT NULL,
-    OrderNo INT NOT NULL,
-    CONSTRAINT FK_tblInputs_SurveyId FOREIGN KEY (SurveyId) REFERENCES tblSurveys(Id) ON DELETE CASCADE, -- Foreign key with delete cascade
-    CONSTRAINT FK_tblInputs_ControlId FOREIGN KEY (ControlId) REFERENCES tblControls(Id) ON DELETE CASCADE -- Foreign key with delete cascade
-);
-
 -- Creating table (tblControls) 
 CREATE TABLE tblControls (
     Id INT IDENTITY(1,1) CONSTRAINT PK_tblControls_Id PRIMARY KEY,
@@ -42,6 +32,17 @@ CREATE TABLE tblControls (
 	IsRequired BIT NOT NULL,
 	OptionData VARCHAR(MAX) NULL
 );
+
+-- Creating table (tblInputs) 
+CREATE TABLE tblInputs (
+    Id INT IDENTITY(1,1) CONSTRAINT PK_tblInputs_Id PRIMARY KEY,
+	SurveyId INT NOT NULL,
+    ControlId INT NOT NULL,
+    OrderNo INT NOT NULL,
+    CONSTRAINT FK_tblInputs_SurveyId FOREIGN KEY (SurveyId) REFERENCES tblSurveys(Id) ON DELETE CASCADE, -- Foreign key with delete cascade
+    CONSTRAINT FK_tblInputs_ControlId FOREIGN KEY (ControlId) REFERENCES tblControls(Id) ON DELETE CASCADE -- Foreign key with delete cascade
+);
+
 
 -- Creating table (tblUserSubmitDetails) 
 CREATE TABLE tblUserSubmitDetails (

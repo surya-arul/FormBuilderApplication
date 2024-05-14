@@ -1,6 +1,7 @@
 ﻿using FormBuilderDTO.DTOs.Base;
 using FormBuilderDTO.DTOs.Control;
 using FormBuilderSharedService.Repositories;
+using FormBuilderSharedService.Utilities;
 using Microsoft.AspNetCore.Components;
 
 namespace FormBuilderBLAZOR.Components.Pages.Control
@@ -11,6 +12,7 @@ namespace FormBuilderBLAZOR.Components.Pages.Control
         {
             Control = new ControlsDto
             {
+                InputType = HtmlHelper.HtmlTypeDropdownList.FirstOrDefault().Value,
                 OptionData = []
             }
         };

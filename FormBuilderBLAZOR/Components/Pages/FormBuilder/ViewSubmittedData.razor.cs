@@ -10,9 +10,6 @@ namespace FormBuilderBLAZOR.Components.Pages.FormBuilder
         public int Id { get; set; }
 
         [Inject]
-        private NavigationManager NavigationManager { get; set; } = default!;
-
-        [Inject]
         private IUserDataRepository UserDataRepository { get; set; } = default!;
 
         private GetDataSubmittedByUserResponse _getDataSubmittedByUserResponse = new();

@@ -58,5 +58,6 @@ CREATE TABLE tblUserData (
 	UserSubmitDetailsId INT NOT NULL,
     Label VARCHAR(MAX) NOT NULL,
     Value VARCHAR(MAX) NOT NULL,
+    ByteValue VARBINARY(MAX) NULL,
     CONSTRAINT FK_tblUserData_UserSubmitDetailsId FOREIGN KEY (UserSubmitDetailsId) REFERENCES tblUserSubmitDetails(Id) ON DELETE CASCADE -- Foreign key with delete cascade
 );

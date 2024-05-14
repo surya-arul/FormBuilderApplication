@@ -15,5 +15,8 @@ namespace FormBuilderDTO.DTOs.Base
 
         [Display(Name = "Value")]
         public string Value { get; set; } = null!;
+
+        [Display(Name = "Value")]
+        public byte[]? ByteValue { get; set; }
     }
 }

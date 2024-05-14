@@ -27,7 +27,14 @@
                             @item.Label
                         </td>
                         <td>
-                            @item.Value
+                            @if(item.ByteValue is not null)
+                            {
+                                <a href="data:application/octet-stream;base64,@Convert.ToBase64String(item.ByteValue)" download="@item.Value">Download @item.Value</a>
+                            }
+                            else
+                            {
+                                @item.Value
+                            }
                         </td>
                     </tr>
                 }

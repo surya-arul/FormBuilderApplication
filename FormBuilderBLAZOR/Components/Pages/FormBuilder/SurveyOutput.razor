@@ -5,7 +5,7 @@
 
 <div class="container body-content border p-3 mt-4 mb-4">
 
-    <form method="post" onsubmit="@SubmitForm" @formname="myform">
+    <form method="post" onsubmit="@SubmitForm" @formname="myform" enctype="multipart/form-data">
         <AntiforgeryToken />
 
         @* This userId field is used to get unique id to store in form submission. (This can be replaced by using Authentication by passing user id) *@

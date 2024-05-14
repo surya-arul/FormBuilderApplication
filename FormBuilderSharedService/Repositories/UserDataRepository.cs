@@ -40,6 +40,7 @@ namespace FormBuilderSharedService.Repositories
                     {
                         Label = userData.Label,
                         Value = userData.Value,
+                        ByteValue = userData.ByteValue,
                     }).ToList()
                 }).FirstOrDefaultAsync();
 

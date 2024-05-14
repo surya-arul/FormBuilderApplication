@@ -13,6 +13,8 @@ namespace FormBuilderSharedService.Models
 
         public string Value { get; set; } = null!;
 
+        public byte[]? ByteValue { get; set; }
+
         public virtual TblUserSubmitDetail UserSubmitDetails { get; set; } = null!;
     }
 }

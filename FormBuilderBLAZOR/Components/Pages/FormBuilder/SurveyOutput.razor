@@ -1,7 +1,7 @@
 ﻿@page "/SurveyOutput/{Id:int}"
 @inject IHttpContextAccessor httpContextAccessor
 
-<h3>SurveyOutput</h3>
+<h3>Survey Output</h3>
 
 <div class="container body-content border p-3 mt-4 mb-4">
 
@@ -17,9 +17,9 @@
         @((MarkupString)HtmlTags)
     </form>
 
-    <h5>Html tags</h5>
+    @* <h5>Html tags</h5>
     <hr />
     <div>
         <p style="white-space: pre-wrap;">@HtmlTags</p>
-    </div>
+    </div> *@
 </div>

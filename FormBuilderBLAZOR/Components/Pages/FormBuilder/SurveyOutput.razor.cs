@@ -40,9 +40,9 @@ namespace FormBuilderBLAZOR.Components.Pages.FormBuilder
 
             // Excluding unwanted form values
             var excludeKeys = new HashSet<string>
-                {
-                    "__RequestVerificationToken", "_handler"
-                };
+            {
+                "__RequestVerificationToken", "_handler"
+            };
 
             List<(string label, string value, byte[]? byteValue)> formValues = [];
 
@@ -63,7 +63,6 @@ namespace FormBuilderBLAZOR.Components.Pages.FormBuilder
                             }
                             else
                             {
-                                //formValues[key] = value;
                                 formValues.Add((key, value, null));
                             }
                         }
@@ -75,7 +74,6 @@ namespace FormBuilderBLAZOR.Components.Pages.FormBuilder
                     using var memoryStream = new MemoryStream();
                     file.CopyTo(memoryStream);
 
-                    //formValues[file.Name] = memoryStream.ToArray();
                     formValues.Add((file.Name, file.FileName, memoryStream.ToArray()));
                 }
 
